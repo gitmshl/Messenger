@@ -42,7 +42,7 @@ public class Connector
         {
             try
             {
-                Connection conn = ((DataSource) ctx.lookup("")).getConnection();
+                Connection conn = ((DataSource) ctx.lookup("java:comp/env/jdbc/root")).getConnection();
                 if (conn != null)
                 {
                     addCountConnections(1);
