@@ -14,6 +14,12 @@ public class Connector
         ctx = getInitialContext();
     }
 
+    /**
+     * Возвращает connection к базе данных MessengerDB
+     * @return null, если коннектион невозможен.
+     * В противном случае, возвращается коннектион
+     */
+
     public Connection getConnection()
     {
         if (ctx == null)
@@ -83,12 +89,18 @@ public class Connector
         try
         {
             connection.close();
+            addCountConnections(-1);
             return true;
         }
         catch (SQLException e)
         {
             return false;
         }
+    }
+
+    public int getCountConnections()
+    {
+        return CountConnections;
     }
 
     private InitialContext getInitialContext()
@@ -110,7 +122,7 @@ public class Connector
     }
 
     private static int CountConnections = 0;
-    private static int MaxConnections = 100;
+    private static int MaxConnections = 3; /// 100
     private static int MaxAttempts = 10;
     private static int Delay = 5000;
     private InitialContext ctx;
