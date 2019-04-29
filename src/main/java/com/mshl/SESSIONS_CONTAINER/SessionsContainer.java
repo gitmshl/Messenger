@@ -30,7 +30,7 @@ public class SessionsContainer
         }
         return false;
     }
-    
+
     public boolean Remove(Session session, int id)
     {
         if (db_handler == null) return false;
@@ -43,9 +43,15 @@ public class SessionsContainer
         return false;
     }
 
+
+    /*
+        Если Ids == null, то возвращается пустой список, но не null!!!
+     */
     public List<Session> getSessionsByIds(int[] Ids)
     {
         List<Session> list = new LinkedList<>();
+
+        if (Ids == null) return list;
 
         for (int id : Ids)
             for (Map.Entry<Session, Integer> entry : sessionMap.entrySet())
