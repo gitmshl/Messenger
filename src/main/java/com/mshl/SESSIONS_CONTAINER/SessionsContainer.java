@@ -18,6 +18,9 @@ public class SessionsContainer
         db_handler = new DB_Handler();
     }
 
+    /*
+        Возвращается false, если возникла какая-та ошибка в БД.
+     */
     public boolean Add(Session session, int id)
     {
 
@@ -31,6 +34,9 @@ public class SessionsContainer
         return false;
     }
 
+    /*
+        Возвращается false, если возникла какая-та ошибка в БД.
+     */
     public boolean Remove(Session session, int id)
     {
         if (db_handler == null) return false;
@@ -47,7 +53,7 @@ public class SessionsContainer
     /*
         Если Ids == null, то возвращается пустой список, но не null!!!
      */
-    public List<Session> getSessionsByIds(int[] Ids)
+    public List<Session> getSessionsByIds(List<Integer> Ids)
     {
         List<Session> list = new LinkedList<>();
 

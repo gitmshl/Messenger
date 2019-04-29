@@ -7,8 +7,12 @@
       var ws = null;
 
       function connect(){
-        if (ws != null) return;
-        ws = new WebSocket("ws://localhost:8080/Messenger_war_exploded/tsc?name=Musa");
+        if (ws != null)
+        {
+          ws.send("df");
+          return;
+        }
+          ws = new WebSocket("ws://localhost:8080/Messenger_war_exploded/tsc?name=Musa");
         ws.onopen = function (){
           console.log("opened");
         }
