@@ -58,7 +58,10 @@ public class Connector
 
             }
             catch (SQLException | NamingException e)
-            {}
+            {
+                System.err.println("Ошибка соединения с базой данных или с ctx.lookup. Connector");
+                e.printStackTrace();
+            }
             finally
             {
                 try
