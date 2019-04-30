@@ -8,4 +8,9 @@ public class Sender
     {
 
     }
+
+    public void sendConfirmation(Session session, int confCode)
+    {
+
+    }
 }
