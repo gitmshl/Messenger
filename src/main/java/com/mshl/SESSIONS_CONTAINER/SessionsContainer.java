@@ -3,6 +3,7 @@ package com.mshl.SESSIONS_CONTAINER;
 import com.mshl.DB_Handler.DB_Handler;
 
 import javax.websocket.Session;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -46,6 +47,21 @@ public class SessionsContainer
             if (countUsersOnlineById(id) < 2) db_handler.Update_Online(id, false);
             if (sessionMap.remove(session) != null) return true;
         }
+        return false;
+    }
+
+    /**
+     * Метод ищет в контейнере данную сессию.
+     * @param session
+     * @return true, если сессия существует в контейнере.
+     * @return  false, в противном случае
+     */
+
+    public boolean existInSCBySession(Session session)
+    {
+        for (Map.Entry<Session, Integer> entry : sessionMap.entrySet())
+            if (entry.getKey().equals(session)) return true;
+
         return false;
     }
 
