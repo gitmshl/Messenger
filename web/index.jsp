@@ -12,9 +12,18 @@
           ws.send("df");
           return;
         }
-          ws = new WebSocket("ws://localhost:8080/Messenger_war_exploded/tsc  ");
+          ws = new WebSocket("ws://localhost:8080/Messenger_war_exploded/tsender");
         ws.onopen = function (){
           console.log("opened");
+        }
+
+        ws.onmessage = function(data){
+          var d = JSON.parse(data.data);
+          console.log(d["code"]);
+          console.log(d["from"]);
+          console.log(d["dialog_id"]);
+          console.log(d["data_type"]);
+          console.log(d["data"]);
         }
 
         ws.onclose = function() {
