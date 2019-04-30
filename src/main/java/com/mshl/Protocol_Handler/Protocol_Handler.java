@@ -1,5 +1,6 @@
 package com.mshl.Protocol_Handler;
 
+import com.mshl.Caster.Caster;
 import com.mshl.DB_Broker.DB_Broker;
 import com.mshl.PData.PQuery;
 import com.mshl.ProtocolExceptions.ProtocolException;
@@ -17,6 +18,7 @@ public class Protocol_Handler
         sender = new Sender();
         db_broker = new DB_Broker();
         SC = new SessionsContainer();
+        caster = new Caster();
     }
 
     public void handl(Session session, PQuery pQuery) throws ProtocolException, SQLException {
@@ -66,4 +68,5 @@ public class Protocol_Handler
     private Sender sender;
     private DB_Broker db_broker;
     private SessionsContainer SC;
+    private Caster caster;
 }
