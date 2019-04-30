@@ -12,7 +12,7 @@
           ws.send("df");
           return;
         }
-          ws = new WebSocket("ws://localhost:8080/Messenger_war_exploded/tgson");
+          ws = new WebSocket("ws://localhost:8080/Messenger_war_exploded/tsc  ");
         ws.onopen = function (){
           console.log("opened");
         }

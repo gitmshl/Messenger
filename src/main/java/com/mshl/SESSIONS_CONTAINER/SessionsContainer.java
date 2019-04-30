@@ -59,7 +59,10 @@ public class SessionsContainer
 
     public boolean existInSCBySession(Session session)
     {
-        return true;
+        for (Map.Entry<Session, Integer> entry : sessionMap.entrySet())
+            if (entry.getKey().equals(session)) return true;
+
+        return false;
     }
 
 
