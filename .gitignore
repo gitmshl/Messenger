@@ -1,5 +1,6 @@
 .idea/*
 .git/*
-.out/*
-.target/*
+out/*
+target/*
 Messenger.iml 
+*Test*
