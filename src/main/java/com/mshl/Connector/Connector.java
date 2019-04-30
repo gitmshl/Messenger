@@ -126,7 +126,7 @@ public class Connector
     }
 
     private static int CountConnections = 0;
-    private static int MaxConnections = 3; /// 100
+    private static int MaxConnections = 100; /// 100
     private static int MaxAttempts = 10;
     private static int Delay = 5000;
     private InitialContext ctx;
