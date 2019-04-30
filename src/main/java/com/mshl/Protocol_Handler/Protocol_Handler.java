@@ -1,5 +1,6 @@
 package com.mshl.Protocol_Handler;
 
+import com.mshl.CONSTS.Consts;
 import com.mshl.Caster.Caster;
 import com.mshl.DB_Broker.DB_Broker;
 import com.mshl.PData.PQuery;
@@ -13,8 +14,9 @@ import java.sql.SQLException;
 public class Protocol_Handler
 {
 
-    public Protocol_Handler()
+    public Protocol_Handler(int user_id)
     {
+        this.user_id = user_id;
         sender = new Sender();
         db_broker = new DB_Broker();
         SC = new SessionsContainer();
@@ -58,8 +60,15 @@ public class Protocol_Handler
         }
     }
 
+    /*
+        Пока что не делаем проверок, требующих идти в БД. Это слишком долго ;(
+     */
     private boolean Check(Session session, PQuery pQuery) throws SQLException
     {
+        if (user_id != pQuery.getFrom()) return false;
+        if (!Consts.existCode(pQuery.getCode())) return false;
+        if (pQuery.getDialog_id() < -1) return false;
+        if (pQuery.getData() == null) return false;
         return true;
     }
 
