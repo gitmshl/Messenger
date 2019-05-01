@@ -18,7 +18,7 @@ public class Sender
     {
         send(session, new PQuery(
                 errCode, Consts.SERVER_ID, -1,
-                Consts.DATA_TYPE_EMPTY_TEXT,
+                Consts.DATA_TYPE_TEXT,
                 msg
                 ));
     }
@@ -27,7 +27,7 @@ public class Sender
     {
         send(session, new PQuery(
                 confCode, Consts.SERVER_ID, -1,
-                Consts.DATA_TYPE_EMPTY_TEXT,
+                Consts.DATA_TYPE_TEXT,
                 ""
         ));
     }

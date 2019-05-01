@@ -6,7 +6,7 @@ import java.util.List;
 public class Consts
 {
     public static final int SERVER_ID = -1;
-    public static final int DATA_TYPE_EMPTY_TEXT = 0; /// data = ""
+    public static final int DATA_TYPE_TEXT = 0; /// data = ""
     public static final List<Integer> Protocol_Codes = new ArrayList<>();
 
     static
