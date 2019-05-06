@@ -9,30 +9,22 @@
       function connect(){
         if (ws != null)
         {
-          var pquery = {
-              code: 30,
-              from: 7,
-              dialog_id: -1,
-              data_type: 0,
-              data: ""
-          };
-
-          ws.send(JSON.stringify(pquery));
-          console.log("имитационный запрос отправлен")
           return;
         }
-          ws = new WebSocket("ws://localhost:8080/Messenger_war_exploded/tmessenger?id=7");
+
+        ws = new WebSocket("ws://localhost:8080/Messenger_war_exploded/tsender");
+
         ws.onopen = function (){
           console.log("opened");
         }
 
         ws.onmessage = function(data){
           var d = JSON.parse(data.data);
-          console.log(d["code"]);
-          console.log(d["from"]);
-          console.log(d["dialog_id"]);
-          console.log(d["data_type"]);
-          console.log(d["data"]);
+          console.log("code: " + d["code"]);
+          console.log("from: " + d["from"]);
+          console.log("dialog_id: " + d["dialog_id"]);
+          console.log("data_type: " + d["data_type"]);
+          console.log("data: " + d["data"]);
         }
 
         ws.onclose = function() {

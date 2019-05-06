@@ -2,16 +2,19 @@ package com.mshl.Sender;
 
 import com.google.gson.Gson;
 import com.mshl.CONSTS.Consts;
+import com.mshl.Group_Handler.Group_Handler;
 import com.mshl.PData.PQuery;
 
 import javax.websocket.Session;
 import java.io.IOException;
+import java.util.List;
 
 public class Sender
 {
     public Sender()
     {
         gson = new Gson();
+        group_handler = new Group_Handler();
     }
 
     public void sendErr(Session session, int errCode, String msg)
@@ -22,6 +25,30 @@ public class Sender
                 msg
                 ));
     }
+
+    /**
+     * Отправляет сообщение всем участникам диалога dialog_id
+     * Нету гарантии отправки сообщений всем пользователям.
+     * Если возникнет ошибка в доставке сообщения, то она просто игнорируется, и
+     * никто об этом не узнает.
+     * @param dialog_id - id диалога, на который нужно отправить сообщение
+     * @param pQuery - объект сообщения (не имеет значение, какого типа)
+     */
+    public void sendToDialog(int dialog_id, PQuery pQuery)
+    {
+        List<Session> sessions = group_handler.getSessionsByDialogId(dialog_id);
+        if (sessions == null) return; /// возникла ошибка (игнорируется)
+        String message = gson.toJson(pQuery);
+        for (Session session : sessions)
+        {
+            try
+            {
+                session.getBasicRemote().sendText(message);
+            }
+            catch (IOException e){}
+        }
+    }
+
 
     public void sendConfirmation(Session session, int confCode)
     {
@@ -43,5 +70,5 @@ public class Sender
     }
 
     private Gson gson;
-
+    private Group_Handler group_handler;
 }
