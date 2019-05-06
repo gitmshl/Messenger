@@ -59,8 +59,6 @@ public class Protocol_Handler
      */
     private void handl_0(PQuery pQuery)
     {
-        System.out.println("sendToDialog: " + pQuery.getDialog_id());
-        System.out.println("Pquery: " + pQuery);
         sender.sendToDialog(pQuery.getDialog_id(), pQuery);
     }
 
