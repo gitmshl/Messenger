@@ -42,10 +42,27 @@ public class Protocol_Handler
 
         switch (protocol_code)
         {
+            case 0: handl_0(pQuery); break;
             case 30: handl_30(session, pQuery); break;
         }
     }
 
+
+    /**
+     * Не производим проверку существования данной сессии в Контейнере Сессий
+     * Это не настолько важная информация. Даже если возникнет какая та ошибка
+     * (т.е. данную сессию получит какой то другой пользователь), это не такая
+     * важная информация, даже если этот пользователь прочтет ее.
+     * Более того, можно на стороне клиента производить проверку существования
+     * диалога, перед добавлением в DOM дерево, на всякий случай.
+     * @param pQuery
+     */
+    private void handl_0(PQuery pQuery)
+    {
+        System.out.println("sendToDialog: " + pQuery.getDialog_id());
+        System.out.println("Pquery: " + pQuery);
+        sender.sendToDialog(pQuery.getDialog_id(), pQuery);
+    }
 
     private void handl_30(Session session, PQuery pQuery) throws SQLException
     {
