@@ -1,6 +1,8 @@
 package com.mshl.DB_Handler;
 
 import com.mshl.Connector.Connector;
+import com.mshl.PData.FromObject;
+import com.mshl.ProtocolExceptions.ProtocolException;
 
 import java.sql.*;
 import java.util.LinkedList;
@@ -13,6 +15,41 @@ public class DB_Handler
         connector = new Connector();
     }
 
+
+    /**
+     * Возвращает строку из таблицы UsersInformation по id пользователя.
+     * @param user_id
+     * @return
+     * @throws SQLException в случае ошибки в БД
+     */
+    public FromObject getUserInformationById(int user_id) throws SQLException, ProtocolException
+    {
+        Connection connection = GetConnection();
+        if (connection == null) throw new SQLException();
+        try (PreparedStatement preparedStatement =
+                connection.prepareStatement(
+                        "select * from \"UsersInformation\" where user_id=?;"))
+        {
+            preparedStatement.setInt(1, user_id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet == null) throw new ProtocolException("wrong user_id in Protocol");
+            while (resultSet.next())
+            {
+                String name = resultSet.getString("name");
+                String login = resultSet.getString("login");
+                String email = resultSet.getString("email");
+                String avatar = resultSet.getString("avatar");
+                Timestamp last_visit_time = resultSet.getTimestamp("last_visit_time");
+                boolean online = resultSet.getBoolean("online");
+                return new FromObject(user_id, name, login, email, avatar, last_visit_time, online);
+            }
+            throw new ProtocolException("User with id = user_id doesn't exist");
+        }
+        finally
+        {
+            connector.closeConnection(connection);
+        }
+    }
 
     /* Тестирование: 28.04.19 23:40 */
     public boolean Update_DialogsLastSessionsChanges(int id)

@@ -26,7 +26,7 @@
           return;
         }
 
-        ws = new WebSocket("ws://localhost:8080/Messenger_war_exploded/tph");
+        ws = new WebSocket("ws://localhost:8080/Messenger_war_exploded/tdbbroker");
 
         ws.onopen = function (){
           user_id = <%= PH_Test.id %>

@@ -62,6 +62,11 @@ public class Protocol_Handler
         sender.sendToDialog(pQuery.getDialog_id(), pQuery);
     }
 
+    private void handl_10(PQuery pQuery)
+    {
+
+    }
+
     private void handl_30(Session session, PQuery pQuery) throws SQLException
     {
         if (SC.existInSCBySession(session))
