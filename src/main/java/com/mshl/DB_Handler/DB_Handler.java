@@ -14,7 +14,25 @@ public class DB_Handler
     {
         connector = new Connector();
     }
-
+    
+    public void updateDialogsTime(int dialog_id, int user_id) throws SQLException
+    {
+        Connection connection = GetConnection();
+        if (connection == null) throw new SQLException();
+        try(PreparedStatement preparedStatement =
+                connection.prepareStatement(
+                        "update \"Dialogs\" set time=now() where dialog_id=? and user_id=?;"
+                ))
+        {
+            preparedStatement.setInt(1, dialog_id);
+            preparedStatement.setInt(2, user_id);
+            preparedStatement.executeUpdate();
+        }
+        finally
+        {
+            connector.closeConnection(connection);
+        }
+    }
 
     public void insertMessages_NewMessage(int dialog_id, int from_user_id,
                                           String from_user_name,
