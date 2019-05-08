@@ -44,6 +44,7 @@ public class Protocol_Handler
         switch (protocol_code)
         {
             case 0: handl_0(pQuery); break;
+            case 1: handl_1(pQuery); break;
             case 10: handl_10(session, pQuery); break;
             case 30: handl_30(session, pQuery); break;
         }
@@ -62,6 +63,11 @@ public class Protocol_Handler
     private void handl_0(PQuery pQuery)
     {
         sender.sendToDialog(pQuery.getDialog_id(), pQuery);
+    }
+
+    private void handl_1(PQuery pQuery) throws SQLException
+    {
+        db_broker.markReadMessage(pQuery);
     }
 
     private void handl_10(Session session, PQuery pQuery) throws SQLException, ProtocolException

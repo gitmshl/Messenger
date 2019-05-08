@@ -13,6 +13,7 @@ public class Consts
     static
     {
         Protocol_Codes.add(0);
+        Protocol_Codes.add(1);
         Protocol_Codes.add(10);
         Protocol_Codes.add(30);
     }
