@@ -14,7 +14,7 @@ public class DB_Handler
     {
         connector = new Connector();
     }
-    
+
     public void updateReadTable_NewMessage(int dialog_id, int from_user_id, String from_user_name,
                                            String last_msg) throws SQLException
     {

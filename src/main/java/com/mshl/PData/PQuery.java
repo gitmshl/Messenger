@@ -46,6 +46,26 @@ public class PQuery
                 "Data: " + data;
     }
 
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public void setFrom(int from) {
+        this.from = from;
+    }
+
+    public void setDialog_id(int dialog_id) {
+        this.dialog_id = dialog_id;
+    }
+
+    public void setData_type(int data_type) {
+        this.data_type = data_type;
+    }
+
+    public void setData(String data) {
+        this.data = data;
+    }
+
     private int code;
     private int from;
     private int dialog_id;
