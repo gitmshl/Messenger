@@ -16,6 +16,33 @@ public class DB_Handler
     }
 
 
+    public void insertMessages_NewMessage(int dialog_id, int from_user_id,
+                                          String from_user_name,
+                                          String from_user_avatar,
+                                          Timestamp time, String txt,
+                                          String img) throws SQLException
+    {
+        Connection connection = GetConnection();
+        if (connection == null) throw new SQLException();
+        try (PreparedStatement preparedStatement =
+                     connection.prepareStatement(
+                             "insert into \"Messages\" values (?, ?, ?, ?, ?, ?, ?);"))
+        {
+            preparedStatement.setInt(1, dialog_id);
+            preparedStatement.setInt(2, from_user_id);
+            preparedStatement.setString(3, from_user_name);
+            preparedStatement.setString(4, from_user_avatar);
+            preparedStatement.setTimestamp(5, time);
+            preparedStatement.setString(6, txt);
+            preparedStatement.setString(7, img);
+            preparedStatement.executeUpdate();
+        }
+        finally
+        {
+            connector.closeConnection(connection);
+        }
+    }
+
     /**
      * Возвращает строку из таблицы UsersInformation по id пользователя.
      * @param user_id

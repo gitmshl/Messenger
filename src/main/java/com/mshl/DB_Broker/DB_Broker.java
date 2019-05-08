@@ -15,11 +15,12 @@ public class DB_Broker
     }
 
     /**
+     * Не тестировался!
      * Сохраняет сообщение в БД (вызывается при отправке сообщения)
      * @param pQuery - запрос от клиента
      * @throws java.sql.SQLException, если возникла ошибка в БД
      */
-    public void saveMsg(PQuery pQuery)
+    public void saveMsg(PQuery pQuery, FromObject fromObject)
     {
 
     }

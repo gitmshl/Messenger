@@ -3,6 +3,7 @@ package com.mshl.Protocol_Handler;
 import com.mshl.CONSTS.Consts;
 import com.mshl.Caster.Caster;
 import com.mshl.DB_Broker.DB_Broker;
+import com.mshl.PData.FromObject;
 import com.mshl.PData.PQuery;
 import com.mshl.ProtocolExceptions.ProtocolException;
 import com.mshl.SESSIONS_CONTAINER.SessionsContainer;
@@ -62,9 +63,12 @@ public class Protocol_Handler
         sender.sendToDialog(pQuery.getDialog_id(), pQuery);
     }
 
-    private void handl_10(PQuery pQuery)
+    private void handl_10(PQuery pQuery) throws SQLException, ProtocolException
     {
-
+        //FromObject fromObject = db_broker.getFromObjectById(pQuery.getFrom());
+        //db_broker.saveMsg(pQuery, fromObject);
+        ///PQuery PQueryResponse =
+       // sender.sendToDialog(pQuery.getDialog_id(), );
     }
 
     private void handl_30(Session session, PQuery pQuery) throws SQLException
