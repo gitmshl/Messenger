@@ -15,6 +15,30 @@ public class DB_Handler
         connector = new Connector();
     }
 
+    /**
+     * Апдейтит таблицу ReadTable, изменяя в ней время last read time на текущее.
+     * Вызывается при запросе 1, т.е. запросе о прочтении сообщений в диалоге.
+     * @param dialog_id
+     */
+    public void updateReadTable_MessageRead(int dialog_id) throws SQLException
+    {
+        Connection connection = GetConnection();
+        if (connection == null) throw new SQLException();
+
+        try(PreparedStatement preparedStatement =
+                    connection.prepareStatement(
+                            "update \"ReadTable\" set last_time_read=now() where dialog_id=?;"
+                    ))
+        {
+            preparedStatement.setInt(1, dialog_id);
+            preparedStatement.executeUpdate();
+        }
+        finally
+        {
+            connector.closeConnection(connection);
+        }
+    }
+
     public void updateReadTable_NewMessage(int dialog_id, int from_user_id, String from_user_name,
                                            String last_msg) throws SQLException
     {
