@@ -15,6 +15,21 @@ public class DB_Broker
         db_handler = new DB_Handler();
     }
 
+
+    /**
+     * Метод, который отмечает сообщения как прочитанные. Срабатывается, при
+     * запросе 1 от клиента.
+     * @param pQuery
+     * @throws SQLException в случае ошибки в БД
+     */
+    public void markReadMessage(PQuery pQuery) throws SQLException
+    {
+        int user_id = pQuery.getFrom();
+        int dialog_id = pQuery.getDialog_id();
+        db_handler.updateDialogsTime(dialog_id, user_id);
+        db_handler.updateReadTable_MessageRead(dialog_id);
+    }
+
     /**
      * Сохраняет сообщение в БД (вызывается при отправке сообщения)
      * @param pQuery - запрос от клиента
