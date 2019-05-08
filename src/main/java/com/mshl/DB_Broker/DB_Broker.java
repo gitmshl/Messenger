@@ -22,9 +22,9 @@ public class DB_Broker
      * @throws ProtocolException, если ошибка в протоколе (например, неверно указан id пользователя
      * (не существует в БД такого id))
      */
-    public void saveMsg(PQuery pQuery) throws SQLException, ProtocolException
+    public void saveMsg(PQuery pQuery, FromObject fromObject) throws SQLException, ProtocolException
     {
-        FromObject fromObject = getFromObjectById(pQuery.getFrom());
+        //FromObject fromObject = getFromObjectById(pQuery.getFrom());
         int dialog_id = pQuery.getDialog_id(),
                 from_user_id = pQuery.getFrom();
         String from_user_name = fromObject.getName(),

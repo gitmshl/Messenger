@@ -5,6 +5,7 @@ import com.mshl.Caster.Caster;
 import com.mshl.DB_Broker.DB_Broker;
 import com.mshl.PData.FromObject;
 import com.mshl.PData.PQuery;
+import com.mshl.PData.PQueryDataMessage;
 import com.mshl.ProtocolExceptions.ProtocolException;
 import com.mshl.SESSIONS_CONTAINER.SessionsContainer;
 import com.mshl.Sender.Sender;
@@ -44,6 +45,7 @@ public class Protocol_Handler
         switch (protocol_code)
         {
             case 0: handl_0(pQuery); break;
+            case 10: handl_10(session, pQuery); break;
             case 30: handl_30(session, pQuery); break;
         }
     }
@@ -63,12 +65,14 @@ public class Protocol_Handler
         sender.sendToDialog(pQuery.getDialog_id(), pQuery);
     }
 
-    private void handl_10(PQuery pQuery) throws SQLException, ProtocolException
+    private void handl_10(Session session, PQuery pQuery) throws SQLException, ProtocolException
     {
-        //FromObject fromObject = db_broker.getFromObjectById(pQuery.getFrom());
-        //db_broker.saveMsg(pQuery, fromObject);
-        ///PQuery PQueryResponse =
-       // sender.sendToDialog(pQuery.getDialog_id(), );
+        FromObject fromObject = db_broker.getFromObjectById(pQuery.getFrom());
+        db_broker.saveMsg(pQuery, fromObject);
+        sender.sendConfirmation(session, 110);
+
+        PQuery pQueryForDialog = caster.getPQueryFromPQDMesage(pQuery, fromObject);
+        sender.sendToDialog(pQueryForDialog.getDialog_id(), pQueryForDialog);
     }
 
     private void handl_30(Session session, PQuery pQuery) throws SQLException
@@ -102,4 +106,5 @@ public class Protocol_Handler
     private DB_Broker db_broker;
     private SessionsContainer SC;
     private Caster caster;
+
 }

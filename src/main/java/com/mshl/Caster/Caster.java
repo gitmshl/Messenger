@@ -1,5 +1,10 @@
 package com.mshl.Caster;
 
+import com.google.gson.Gson;
+import com.mshl.CONSTS.Consts;
+import com.mshl.PData.FromObject;
+import com.mshl.PData.PQuery;
+import com.mshl.PData.PQueryDataMessage;
 import com.mshl.ProtocolExceptions.ProtocolException;
 import com.mshl.Sender.Sender;
 
@@ -11,6 +16,28 @@ public class Caster
     public Caster()
     {
         sender = new Sender();
+        gson = new Gson();
+    }
+
+    /**
+     * Возвращает объект PQuery, который содержит в поле data
+     * json строку, образованную из класса PQueryDataMessage.
+     * Такой вид передачи данных используется при отправке сообщений.
+     * @return PQuery
+     */
+    public PQuery getPQueryFromPQDMesage(PQuery pQuery, FromObject fromObject)
+    {
+        PQueryDataMessage pQueryDataMessage = new PQueryDataMessage(
+                fromObject.getName(), fromObject.getAvatar(),
+                pQuery.getData()
+        );
+
+        String data = gson.toJson(pQueryDataMessage);
+
+        PQuery pQuery1 = new PQuery(10, pQuery.getFrom(),
+                pQuery.getDialog_id(), Consts.DATA_TYPE_MESSAGE, data);
+
+        return pQuery1;
     }
 
     /**
@@ -37,4 +64,5 @@ public class Caster
     }
 
     private Sender sender;
+    private Gson gson;
 }
