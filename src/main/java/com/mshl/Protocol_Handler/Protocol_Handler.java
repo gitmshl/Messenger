@@ -5,7 +5,6 @@ import com.mshl.Caster.Caster;
 import com.mshl.DB_Broker.DB_Broker;
 import com.mshl.PData.FromObject;
 import com.mshl.PData.PQuery;
-import com.mshl.PData.PQueryDataMessage;
 import com.mshl.ProtocolExceptions.ProtocolException;
 import com.mshl.SESSIONS_CONTAINER.SessionsContainer;
 import com.mshl.Sender.Sender;
