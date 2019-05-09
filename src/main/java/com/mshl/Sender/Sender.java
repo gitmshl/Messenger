@@ -17,6 +17,28 @@ public class Sender
         group_handler = new Group_Handler();
     }
 
+    /**
+     * Не тестировался!
+     * Отправляет PQuery запрос с data_type = 2 (DATA_TYPE_DIALOGS_LIST).
+     * Вызывается DB Broker-ом при получении списка диалогов данного пользователя
+     * из БД.
+     * @param session - сессия пользователя, запросившего список диалогов.
+     * @param pQuery - запрос, отправленный этим пользователем на сервер
+     * @param data - json представление списка диалогов, полученных DB Handler-ом.
+     */
+    public void sendDialogsListToUser(Session session, PQuery pQuery, String data)
+    {
+        PQuery pQueryResponse = new PQuery(
+                120, Consts.SERVER_ID, pQuery.getDialog_id(),
+                Consts.DATA_TYPE_DIALOGS_LIST,
+                data
+        );
+        try
+        {
+            session.getBasicRemote().sendText(gson.toJson(pQueryResponse));
+        } catch (IOException e){}
+    }
+
     public void sendErr(Session session, int errCode, String msg)
     {
         send(session, new PQuery(

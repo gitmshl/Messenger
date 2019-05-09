@@ -1,4 +1,5 @@
 <%@ page import="com.mshl.Protocol_Handler.Protocol_Handler" %>
+<%@ page import="com.mshl.DB_Broker.DB_Broker_Test" %>
 <%@ page import="com.mshl.Protocol_Handler.PH_Test" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -14,11 +15,11 @@
         if (ws != null)
         {
           var pQuery = {
-              code: 0,
+              code: 20,
               from: user_id,
-              dialog_id: 4,
+              dialog_id: 0,
               data_type: 0,
-              data: "Halilov Musa"
+              data: ""
           };
           ws.send(JSON.stringify(pQuery));
           console.log(pQuery);
@@ -26,7 +27,7 @@
           return;
         }
 
-        ws = new WebSocket("ws://localhost:8080/Messenger_war_exploded/tdbbroker");
+        ws = new WebSocket("ws://localhost:8080/Messenger_war_exploded/tph");
 
         ws.onopen = function (){
           user_id = <%= PH_Test.id %>
@@ -35,11 +36,11 @@
 
         ws.onmessage = function(data){
           var d = JSON.parse(data.data);
-          console.log("code: " + d["code"]);
-          console.log("from: " + d["from"]);
-          console.log("dialog_id: " + d["dialog_id"]);
-          console.log("data_type: " + d["data_type"]);
-          console.log("data: " + d["data"]);
+          console.log("code: " + d["code"])
+          var arr = (JSON.parse(d["data"]))["dialogInfList"];
+          arr.forEach(function(item){
+              console.log("dialog name: " + item["dialog_name"]);
+          });
         }
 
         ws.onclose = function() {

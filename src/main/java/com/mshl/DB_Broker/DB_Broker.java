@@ -4,7 +4,9 @@ import com.mshl.DB_Handler.DB_Handler;
 import com.mshl.PData.FromObject;
 import com.mshl.PData.PQuery;
 import com.mshl.ProtocolExceptions.ProtocolException;
+import com.mshl.Sender.Sender;
 
+import javax.websocket.Session;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
@@ -13,8 +15,24 @@ public class DB_Broker
     public DB_Broker()
     {
         db_handler = new DB_Handler();
+        sender = new Sender();
     }
 
+
+    /**
+     * Метод получает список диалогов пользователя по pQuery пользователя
+     * (соответствует запросу 20), и, получив этот список, вызывает sender для
+     * генерации правильного запроса (запрос 120) и отправки данных пользователю.
+     * @param session - сессия пользователя, запросившего список диалогов
+     * @param pQuery - 20 запрос от пользователя (не производится проверка
+     *               правильности запроса, это делает Protocol Handler
+     * @throws SQLException - если возникла ошибка в БД
+     */
+    public void sendToUserDialogsListByUserId(Session session, PQuery pQuery) throws SQLException
+    {
+       String data = db_handler.getDialogsListByUserId(pQuery.getFrom());
+       sender.sendDialogsListToUser(session, pQuery, data);
+    }
 
     /**
      * Метод, который отмечает сообщения как прочитанные. Срабатывается, при
@@ -69,4 +87,5 @@ public class DB_Broker
     }
 
     private DB_Handler db_handler;
+    private Sender sender;
 }

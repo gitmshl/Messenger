@@ -40,7 +40,7 @@ public class Group_Handler
     private List<Session> getFromCache(int dialog_id) throws SQLException
     {
         if (db_handler == null) throw new SQLException("db_handler = null. getFromCache. Group Handler");
-        if (current_dialog_id == dialog_id)
+        if (current_dialog_id != -1 && current_dialog_id == dialog_id)
         {
             Timestamp timestamp = db_handler.getLastChangeTime_DialogsLastSessionsChanges(dialog_id);
             if (last_change_time.after(timestamp)) return cache;

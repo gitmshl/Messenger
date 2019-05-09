@@ -1,7 +1,9 @@
 package com.mshl.DB_Handler;
 
+import com.google.gson.Gson;
 import com.mshl.Connector.Connector;
 import com.mshl.PData.FromObject;
+import com.mshl.PData.PQueryDialogsList;
 import com.mshl.ProtocolExceptions.ProtocolException;
 
 import java.sql.*;
@@ -13,7 +15,52 @@ public class DB_Handler
     public DB_Handler()
     {
         connector = new Connector();
+        gson = new Gson();
     }
+
+
+    /**
+     * Метод, который извлекает из БД список диалогов данного пользователя user_id, создает объект
+     * PQueryDialogsList и упаковывает его в JSON.
+     * @param user_id
+     * @return строку json из списка диалогов данного пользователя user_id
+     * @throws SQLException, если возникнет ошибка в БД
+     */
+    public String getDialogsListByUserId(int user_id) throws SQLException
+    {
+        Connection connection = GetConnection();
+        if (connection == null) throw new SQLException();
+
+        try(PreparedStatement preparedStatement =
+                connection.prepareStatement(
+                        "select r.dialog_id, r.dialog_name, d.dialog_img, r.last_msg, r.from_user_name, r.last_msg_time, r.from_user_id, r.last_time_read, d.time as my_last_reading_time from \"Dialogs\" as d join \"ReadTable\" as r on r.dialog_id = d.dialog_id where d.user_id = ? order by r.last_msg_time desc;"
+                ))
+        {
+            preparedStatement.setInt(1, user_id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            PQueryDialogsList pQueryDialogsList = new PQueryDialogsList();
+            while (resultSet.next())
+            {
+                int dialog_id = resultSet.getInt("dialog_id");
+                String dialog_name = resultSet.getString("dialog_name");
+                String dialog_img = resultSet.getString("dialog_img");
+                String last_msg = resultSet.getString("last_msg");
+                String from_user_name = resultSet.getString("from_user_name");
+                Timestamp last_msg_time = resultSet.getTimestamp("last_msg_time");
+                int from_user_id = resultSet.getInt("from_user_id");
+                Timestamp last_time_read = resultSet.getTimestamp("last_time_read");
+                Timestamp my_last_reading_time = resultSet.getTimestamp("my_last_reading_time");
+                pQueryDialogsList.Add(dialog_id, dialog_name, dialog_img, last_msg, from_user_name,
+                        last_msg_time, from_user_id, last_time_read, my_last_reading_time);
+            }
+            return gson.toJson(pQueryDialogsList);
+        }
+        finally
+        {
+            connector.closeConnection(connection);
+        }
+    }
+
 
     /**
      * Апдейтит таблицу ReadTable, изменяя в ней время last read time на текущее.
@@ -268,4 +315,5 @@ public class DB_Handler
     }
 
     private Connector connector;
+    private Gson gson;
 }

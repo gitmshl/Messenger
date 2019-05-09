@@ -13,9 +13,6 @@
         function refresh()
         {
             user_id = <%= PH_Test.id %>
-            <%
-            PH_Test.showId();
-            %>
             console.log("id: " + <%= PH_Test.id %>);
         }
 
@@ -41,11 +38,11 @@
             if (ws != null)
             {
                 var pQuery = {
-                    code: 10,
+                    code: 1,
                     from: user_id,
                     dialog_id: dialog_id,
                     data_type: 0,
-                    data: msg
+                    data: ""
                 };
 
                 ws.send(JSON.stringify(pQuery));
