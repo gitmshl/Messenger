@@ -2,11 +2,11 @@ package com.mshl.DB_Handler;
 
 import com.google.gson.Gson;
 import com.mshl.Connector.Connector;
-import com.mshl.PData.FromObject;
-import com.mshl.PData.PQueryDialogsList;
+import com.mshl.PData.*;
 import com.mshl.ProtocolExceptions.ProtocolException;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -18,6 +18,90 @@ public class DB_Handler
         gson = new Gson();
     }
 
+
+    /**
+     * Метод, который из таблиц ReadTable и Dialog возвращает информацию о последнем сообщении,
+     * которое там отправлено.
+     * @param user_id - id пользователя, который отправил запрос 21 и хочет получить список сообщений диалога.
+     * @param dialog_id - id диалога, из которого нужно вытащить эту информацию
+     * @return объект LastMsgInf со всей необходимой информацией. Эта информация представляет из себя следующее:
+     *  from_user_id - id пользователя, отправившего последнее сообщение в dialog_id
+     *  last_read_time - поле таблицы ReadTable
+     *  last_msg_time - время последнего сообщения
+     *  my_last_reading_time - время последнего просмотра диалога dialog_id пользователем user_id (таблица Dialogs)
+     * @return null, если не найдется такой строки в таблицах БД (вообще говоря, это ошибка достаточно серьезная)
+     */
+    public LastMsgInf getLastMsgInfByDialogId(int user_id, int dialog_id) throws SQLException
+    {
+        Connection connection = GetConnection();
+        if (connection == null) throw new SQLException();
+        try(PreparedStatement preparedStatement =
+                connection.prepareStatement(
+                        "select r.from_user_id, r.last_time_read, r.last_msg_time, (select time from \"Dialogs\" where dialog_id=? and user_id=?) as my_last_reading_time from \"ReadTable\" as r where r.dialog_id=?;")
+                )
+        {
+            preparedStatement.setInt(1, dialog_id);
+            preparedStatement.setInt(2, user_id);
+            preparedStatement.setInt(3, dialog_id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next())
+            {
+                int from_user_id = resultSet.getInt("from_user_id");
+                Timestamp last_read_time = resultSet.getTimestamp("last_time_read");
+                Timestamp last_msg_time = resultSet.getTimestamp("last_msg_time");
+                Timestamp my_last_reading_time = resultSet.getTimestamp("my_last_reading_time");
+                LastMsgInf lastMsgInf = new LastMsgInf(from_user_id, last_read_time, last_msg_time,
+                        my_last_reading_time);
+                return lastMsgInf;
+            }
+            return null;
+        }
+        finally
+        {
+            connector.closeConnection(connection);
+        }
+    }
+
+    /**
+     * Метод, который из таблицы Messages вытаскивает сообщения конкретного
+     * диалога и составляет из них список List<MessageInf>. Класс MessageInf
+     * специально создан для удобного хранения информации о сообщениях.
+     * @param dialog_id - id диалога, из которого нужно считывать сообщения
+     * @return список объекто MessageInf, каждый из которых хранит информацию
+     *         об отдельном сообщении диалога.
+     * @throws SQLException - ошибка в БД (например, БД отключена)
+     */
+    public List<MessageInf> getMessagesListByDialogId(int dialog_id) throws SQLException
+    {
+        Connection connection = GetConnection();
+        if (connection == null) throw new SQLException();
+        try(PreparedStatement preparedStatement =
+                connection.prepareStatement(
+                        "select from_user_id, from_user_name, from_user_avatar, txt as msg, time from \"Messages\" where dialog_id=?;"
+                ))
+        {
+            preparedStatement.setInt(1, dialog_id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            List<MessageInf> messageInfList = new ArrayList<>();
+            while (resultSet.next())
+            {
+                int from_user_id = resultSet.getInt("from_user_id");
+                String from_user_name = resultSet.getString("from_user_name");
+                String from_user_avatar = resultSet.getString("from_user_avatar");
+                String msg = resultSet.getString("msg");
+                Timestamp time = resultSet.getTimestamp("time");
+                MessageInf messageInf = new MessageInf(from_user_id, from_user_name,
+                        from_user_avatar, msg, time);
+                messageInfList.add(messageInf);
+            }
+            return messageInfList;
+        }
+        finally
+        {
+            connector.closeConnection(connection);
+        }
+    }
 
     /**
      * Метод, который извлекает из БД список диалогов данного пользователя user_id, создает объект
