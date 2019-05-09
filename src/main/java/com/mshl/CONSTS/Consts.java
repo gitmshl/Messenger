@@ -30,6 +30,10 @@ public class Consts
             ]
          }
     */
+    public static final int DATA_TYPE_MESSAGES_LIST = 3;
+    /*
+
+     */
     public static final List<Integer> Protocol_Codes = new ArrayList<>();
 
     static

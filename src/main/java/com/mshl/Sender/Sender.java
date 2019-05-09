@@ -17,8 +17,20 @@ public class Sender
         group_handler = new Group_Handler();
     }
 
+    public void sendMessagesListToUser(Session session, PQuery pQuery, String data)
+    {
+        PQuery pQueryResponse = new PQuery(
+                121, Consts.SERVER_ID, pQuery.getDialog_id(),
+                Consts.DATA_TYPE_MESSAGES_LIST,
+                data
+        );
+        try
+        {
+            session.getBasicRemote().sendText(gson.toJson(pQueryResponse));
+        } catch (IOException e){}
+    }
+
     /**
-     * Не тестировался!
      * Отправляет PQuery запрос с data_type = 2 (DATA_TYPE_DIALOGS_LIST).
      * Вызывается DB Broker-ом при получении списка диалогов данного пользователя
      * из БД.

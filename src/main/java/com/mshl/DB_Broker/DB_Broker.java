@@ -1,8 +1,10 @@
 package com.mshl.DB_Broker;
 
+import com.google.gson.Gson;
 import com.mshl.DB_Handler.DB_Handler;
 import com.mshl.PData.FromObject;
 import com.mshl.PData.PQuery;
+import com.mshl.PData.PQueryMessagesList;
 import com.mshl.ProtocolExceptions.ProtocolException;
 import com.mshl.Sender.Sender;
 
@@ -16,6 +18,17 @@ public class DB_Broker
     {
         db_handler = new DB_Handler();
         sender = new Sender();
+        gson = new Gson();
+    }
+
+    public void sendToUserMessagesList(Session session, PQuery pQuery) throws SQLException
+    {
+        PQueryMessagesList pQueryMessagesList = new PQueryMessagesList();
+        pQueryMessagesList.setLastMsgInf(db_handler.getLastMsgInfByDialogId(pQuery.getFrom(), pQuery.getDialog_id()));
+        pQueryMessagesList.setMessageInfList(db_handler.getMessagesListByDialogId(pQuery.getDialog_id()));
+
+        String data = gson.toJson(pQueryMessagesList);
+        sender.sendMessagesListToUser(session, pQuery, data);
     }
 
 
@@ -88,4 +101,5 @@ public class DB_Broker
 
     private DB_Handler db_handler;
     private Sender sender;
+    private Gson gson;
 }
