@@ -6,41 +6,33 @@
   <head>
     <title>TestConnector</title>
 
-    <script type="text/javascript">
-      var ws = null;
+      <script type="text/javascript" src="js/Sender/Sender.js"></script>
+        <script type="text/javascript" src="js/SST/SST.js"></script>
+      <script type="text/javascript" src="js/Consts/Consts.js"></script>
+      <script type="text/javascript" src="js/UC/UC.js"></script>
+      <script type="text/javascript" src="js/Timer/Timer.js"></script>
+      <script type="text/javascript" src="js/ProtocolHandler/PH.js"></script>
 
-      var user_id = 0;
+    <script type="text/javascript">
+
+        var ws = null;
+
+        SST.setUser(0, "Musa", "halilovmusa", "halilovmusa@gmail.com");
 
       function connect(){
-        if (ws != null)
-        {
-          var pQuery = {
-              code: 20,
-              from: user_id,
-              dialog_id: 0,
-              data_type: 0,
-              data: ""
-          };
-          ws.send(JSON.stringify(pQuery));
-          console.log(pQuery);
-          console.log("имитационный запрос отправлен");
-          return;
-        }
+
+        if (ws != null) return;
 
         ws = new WebSocket("ws://localhost:8080/Messenger_war_exploded/tph");
 
+        Sender.setWs(ws);
+
         ws.onopen = function (){
-          user_id = <%= PH_Test.id %>
-          console.log("opened");
+          UC.start();
         }
 
         ws.onmessage = function(data){
-          var d = JSON.parse(data.data);
-          console.log("code: " + d["code"])
-          var arr = (JSON.parse(d["data"]))["dialogInfList"];
-          arr.forEach(function(item){
-              console.log("dialog name: " + item["dialog_name"]);
-          });
+            PH.handl(data.data);
         }
 
         ws.onclose = function() {
@@ -50,7 +42,6 @@
         ws.onerror = function(){
            console.log("error of connection");
         }
-
       }
 
     </script>
