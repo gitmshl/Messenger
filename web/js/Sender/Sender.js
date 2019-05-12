@@ -6,6 +6,12 @@ class Sender{
         this.ws = ws;
     }
 
+    static send_20(){
+        console.log("Sender.send_20()");
+        let user_id = SST.getId();
+        Sender.send_dt_TEXT(20, user_id, -1, "");
+    }
+
     static send_30(){
         console.log("Sender.send_30()");
         let user_id = SST.getId();

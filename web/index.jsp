@@ -17,7 +17,7 @@
 
         var ws = null;
 
-        SST.setUser(0, "Musa", "halilovmusa", "halilovmusa@gmail.com");
+        SST.setUser(8, "Musa", "halilovmusa", "halilovmusa@gmail.com");
 
       function connect(){
 

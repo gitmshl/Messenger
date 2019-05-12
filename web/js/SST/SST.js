@@ -88,8 +88,7 @@ class SST{
      * @param flag - на него и устаналивается handshake
      */
     static setHandshake(flag = true){
-        if (flag instanceof Boolean)
-            this.handshake = flag;
+        this.handshake = flag;
     }
 
     static checkHandshake(){
