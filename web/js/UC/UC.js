@@ -16,6 +16,12 @@ class UC{
         Timer.setTimer_20();
     }
 
+    static goToDialog(dialog_id){
+        console.log("UC.goToDialog");
+        Painter.FromDialogListToDialog(dialog_id);
+        /* PASS еще много нужно написать ! */
+    }
+
     static err_150(){
         console.log("UC.err_150()");
     }

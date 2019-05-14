@@ -5,6 +5,9 @@ class Painter{
         Painter.Block.DialogList.maindiv = document.getElementById("Dialogs");
         Painter.Block.Dialog.div = document.getElementById("Dialog");
         Painter.Block.Dialog.maindiv = document.getElementById("Messages");
+        Painter.Block.Dialog.input_field = document.getElementById("textar");
+        Painter.Block.Dialog.submit_button = document.getElementById("send");
+
         document.getElementsByTagName("body")[0].style.display = "block";
     }
 
@@ -82,15 +85,15 @@ class Painter{
         let sub1 = "<div class=\"sub1\">" + dialog_name + "</div>"; /// Имя
         let sub2 = "<div class=\"sub2\" style=\"display: block;\">"+last_msg+"</div>"; /// последнее сообщение
         let date = "<div class=\"date\">"+Painter.getRightDateTime(last_msg_time)+"</div>"; /// дата (время) последнего сообщения
-        let function_onclick = "alert("+ dialog_id +");"
+        let function_onclick = "UC.goToDialog("+ dialog_id +");";
         div.innerHTML = avatar_block +
-            "<a href=\"google.com\" class=\"profile_name_link\" onclick=\"" + function_onclick +" return false;\">" +
+            "<div style='cursor: pointer;' class=\"profile_name_link\" onclick=\"" + function_onclick +" return false;\">" +
             "<div class=\"profile_name\">" +
             sub1 +
             sub2 +
             "<div class=\"sub3\" style=\"display: none;\"></div>" +
             date +
-            "</div></a>";
+            "</div></div>";
 
         Painter.Block.DialogList.maindiv.appendChild(div);
         //// После вставки в DOM дерево, начинаем настраивать необходимые классы
@@ -119,6 +122,34 @@ class Painter{
         b.display = false;
     }
 
+    /**
+     * Блокирует ввод данных и их отправку в поле ввода (в Dialog)
+     */
+    static blockSending(){
+        Painter.Block.Dialog.input_field.disabled = "disabled";
+    }
+
+    /**
+     * Разблокирует возможность отправки сообщений
+     */
+    static unlockSending(){
+        Painter.Block.Dialog.input_field.disabled = "";
+    }
+
+    /**
+     * Функция, которая переводит интерфейс(и DOM дерево) из Dialog List
+     * в Dialog (SST.dialog_id не трогается, этим занимаются модули более
+     * высокого порядка)
+     * @param dialog_id - id диалога в который переходим
+     * @constructor
+     */
+    static FromDialogListToDialog(dialog_id){
+        Painter.hideDialogList();
+        Painter.Block.Dialog.input_field.value = Painter.findInBuffer(dialog_id);
+        Painter.blockSending();
+        Painter.showDialog();
+    }
+
     static showDialog(){
         let b = Painter.Block.Dialog;
         b.div.style.display = "block";
@@ -131,6 +162,29 @@ class Painter{
         b.display = false;
     }
 
+    /**
+     * Ищет в Буфере dialog_id.
+     * @param dialog_id
+     * @return последнее сообщение, которое пользователь не отправил (но написал в поле ввода), если в буфере
+     *          есть диалог dialog_id. В противном случае, возвращается пустая строка.
+     */
+    static findInBuffer(dialog_id){
+        Painter.Buffer.forEach(function(item){
+            if (item.dialog_id == dialog_id) return item.text;
+        });
+        return "";
+    }
+
+    static saveToBuffer(dialog_id, text){
+        if (!text || text == "") return;
+        Painter.Buffer.push({
+            dialog_id: dialog_id,
+            text: text
+        });
+        if (Painter.Buffer.length > Consts.PainterMaxBufferSize)
+            Painter.Buffer.shift();
+    }
+
     static Block = {
         DialogList: {
             display: false,
@@ -140,9 +194,14 @@ class Painter{
         Dialog:{
             display: false,
             div: null,
-            maindiv: null
+            maindiv: null,
+            input_field: null,
+            submit_button: null
         }
     }
+
+    static Buffer = []; /// Буфер хранения неотправленных сообщений
+    /// Максимальный размер регулируется в Consts.PainterMaxBufferSize
 
     static monthNames = ["January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"

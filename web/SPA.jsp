@@ -19,6 +19,7 @@
 
 
     <script type="text/javascript">
+
         window.onload = function(){
             SST.setUser(8, "Musa", "halilovmusa", "halilovmusa@gmail.com");
             var ws = new WebSocket("ws://localhost:8080/Messenger_war_exploded/tph");
@@ -123,35 +124,39 @@
             </form>
 
             <div id="Dialogs">
-                <%--<div class="dialog_block">--%>
-                    <%--<div class="avatar_block">--%>
-                        <%--<img src="img/mfB4lkFrPe0.jpg">--%>
-                    <%--</div>--%>
 
-                    <%--<a href="google.com" class="profile_name_link" onclick="alert('hi'); return false;">--%>
-                        <%--<div class="profile_name">--%>
-                            <%--<div class="sub1">--%>
-                                <%--Musa Halilov--%>
-                            <%--</div>--%>
-                            <%--<div class="sub2 dread">--%>
-                                <%--some textsome textsome--%>
-                            <%--</div>--%>
-                            <%--<div class="sub3" style="display: none;">--%>
-                            <%--</div>--%>
-                            <%--<div class="date">--%>
-                                <%--9:05--%>
-                            <%--</div>--%>
-                        <%--</div>--%>
-                    <%--</a>--%>
-                <%--</div>--%>
             </div>
 
         </div>
     </div>
 
     <div id="Dialog" style="display: none;">
-        <div id="Messages">
-            Dialog
+        <div class="middle_content_current_dialog">
+
+            <div class="profile_block_current_dialog">
+                <img src="img/mfB4lkFrPe0.jpg"  class="profile_photo_current_dialog" alt="">
+                <div class="profile_name_current_dialog">
+                    <div class="sub1_current_dialog">
+                        <a href="#" class="profile_name_link_current_dialog">MUSA</a>
+                    </div>
+                </div>
+            </div>
+
+            <div id="Messages">
+                <div class="dialog_history_current_dialog">
+                    <div class="message_current_dialog">
+                        <div id="photo_space">
+                            <img src="img/mfB4lkFrPe0.jpg" alt="" id="avat">
+                        </div>
+                        <p class="date_current_dialog">04:06</p>
+                        <p class="message_text_current_dialog">dfgdfgdfgdfgdfg</p>
+                    </div>
+                </div>
+            </div>
+            <div class="typing_block_current_dialog">
+                <textarea name="msg" id="textar" disabled="disabled"></textarea>
+                <button type = "submit" name = "Send_msg_Button" id="send"></button>
+            </div>
         </div>
     </div>
 
