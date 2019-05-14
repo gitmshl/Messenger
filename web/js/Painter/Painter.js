@@ -110,6 +110,64 @@ class Painter{
         });
     }
 
+    static InsertInDOMMessageWhenLastMsgFromMe(message, lastMsgInf, message_id){
+        let last_read_time = new Date(lastMsgInf.last_read_time);
+        let last_msg_time = new Date(lastMsgInf.last_msg_time);
+        if (last_read_time > last_msg_time)
+        {
+            Painter.InsertInDOMMessageWhenLastMsgNotFromMe(message, message_id);
+            return;
+        }
+        let msg_time = new Date(message.time);
+        let classdop = msg_time > last_read_time ? "unread" : "";
+        Painter.InsertInDOMMessageWhenLastMsgNotFromMe(message, message_id, classdop);
+    }
+
+    static InsertInDOMMessageWhenLastMsgNotFromMe(message, message_id, classdop=""){
+        let from_user_id = message.from_user_id;
+        let from_user_name = message.from_user_name;
+        let from_user_avatar = "user_" + from_user_id + "/" + message.from_user_avatar;
+        let msg = message.msg;
+        let msg_time = new Date(message.time);
+        let msg_hours = msg_time.getHours() < 10 ? "0" + msg_time.getHours() : msg_time.getHours();
+        let msg_minutes = msg_time.getMinutes() < 10 ? "0" + msg_time.getMinutes() : msg_time.getMinutes();
+
+        let div = document.createElement("div");
+        div.className = "dialog_history_current_dialog";
+        div.id = "message_id_" + message_id;
+        div.innerHTML = "<div class=\""+classdop+" message_current_dialog\"><div id=\"photo_space\">" +
+            "<img src=\"img/" + from_user_avatar +"\" alt=\"\" id=\"avat\">" +
+            "<div class=\"hiddenUserName_current_dialog\" style=\"display: none;\">" + from_user_name + "</div>" +
+            "<div class=\"hiddenUserId_current_dialog\" style=\"display: none;\">"+from_user_id+"</div>" +
+            "</div><p class=\"date_current_dialog\">"+msg_hours+":"+msg_minutes+"</p>" +
+            "<p class=\"message_text_current_dialog\">"+msg+"</p></div>";
+
+        Painter.Block.Dialog.maindiv.appendChild(div);
+    }
+
+    /**
+     * Вставляет в диалог список сообщений, полученных от сервера
+     * @constructor
+     */
+    static AddInDialog(lastMsgInf, messageInfList){
+        console.log("AddInDialog");
+        /* Установим имя и аватарку диалога */
+        let dialog_name = SST.DialogInformation.name;
+        let dialog_img = SST.DialogInformation.img;
+        Painter.Block.Dialog.div.getElementsByClassName("profile_photo_current_dialog")[0].src = dialog_img;
+        Painter.Block.Dialog.div.getElementsByClassName("profile_name_link_current_dialog")[0].textContent = dialog_name;
+        /* Вставляем сообщения */
+        if (SST.getId() != lastMsgInf.from_user_id)
+            messageInfList.forEach(function(message, message_id){
+                Painter.InsertInDOMMessageWhenLastMsgNotFromMe(message, message_id);
+            });
+        else
+            messageInfList.forEach(function(message, message_id){
+                Painter.InsertInDOMMessageWhenLastMsgFromMe(message, lastMsgInf, message_id);
+            });
+        Painter.unlockSending();
+    }
+
     static showDialogList(){
         let b = Painter.Block.DialogList;
         b.div.style.display = "block";

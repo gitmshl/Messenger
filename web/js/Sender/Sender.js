@@ -6,10 +6,23 @@ class Sender{
         this.ws = ws;
     }
 
+    static send_1(){
+        console.log("Sender.send_1()");
+        let user_id = SST.getId();
+        let dialog_id = SST.getCurrentDialog();
+        Sender.send_dt_TEXT(1, user_id, dialog_id, "");
+    }
+
     static send_20(){
         console.log("Sender.send_20()");
         let user_id = SST.getId();
         Sender.send_dt_TEXT(20, user_id, -1, "");
+    }
+
+    static send_21(dialog_id){
+        console.log("Sender.send_21");
+        let user_id = SST.getId();
+        Sender.send_dt_TEXT(21, user_id, dialog_id, "");
     }
 
     static send_30(){

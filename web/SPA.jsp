@@ -45,7 +45,7 @@
     </script>
 
 </head>
-<body style="display: none;">
+<body id="body" style="display: none;">
 <header>
     <div class="header">
         <div class="subheader">
@@ -99,8 +99,8 @@
 
             <li>
                 <div class="my_messages">
-                    <a href="DS.php">
-                        My messages
+                    <a href="DS.php" onclick="">
+                        My dialogs
                     </a>
                 </div>
             </li>
@@ -143,10 +143,12 @@
             </div>
 
             <div id="Messages">
-                <div class="dialog_history_current_dialog">
+                <div class="dialog_history_current_dialog" id="message_id_1">
                     <div class="message_current_dialog">
                         <div id="photo_space">
                             <img src="img/mfB4lkFrPe0.jpg" alt="" id="avat">
+                            <div class="hiddenUserName_current_dialog" style="display: none;">User Name</div>
+                            <div class="hiddenUserId_current_dialog" style="display: none;">User Id</div>
                         </div>
                         <p class="date_current_dialog">04:06</p>
                         <p class="message_text_current_dialog">dfgdfgdfgdfgdfg</p>

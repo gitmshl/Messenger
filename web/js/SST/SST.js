@@ -14,7 +14,8 @@ class SST{
 
     /**
      * Фиксирует отправку клиентского запроса (например, запроса 10).
-     * @param code - код протокола. Т.к. это клиентский протокол, то code < 100
+     * @param code - код протокола. Т.к. это клиентский протокол, то
+     *                                                      code < 100
      */
     static fixSendingRequest(code){
         console.log("fixSendingRequest(code = " + code + " )");
@@ -96,6 +97,15 @@ class SST{
         return this.handshake;
     }
 
+    static setCurrentDialog(dialog_id){
+        SST.current_dialog = dialog_id;
+        let dialog_block = document.getElementById(dialog_id);
+        let dialog_name = dialog_block.getElementsByClassName("sub1")[0].textContent;
+        let dialog_img = dialog_block.getElementsByClassName("avatar_block")[0].getElementsByTagName("img")[0].src
+        SST.DialogInformation.name = dialog_name;
+        SST.DialogInformation.img = dialog_img;
+    }
+
     static getCurrentDialog(){
         return this.current_dialog;
     }
@@ -116,6 +126,11 @@ class SST{
         name: "",
         email: "",
         login: ""
+    }
+
+    static DialogInformation = {
+        name: "",
+        img: ""
     }
 
     static Flags = [];

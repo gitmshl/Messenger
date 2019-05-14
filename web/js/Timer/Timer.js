@@ -42,6 +42,30 @@ class Timer{
         UC.req_20();
     }
 
+    static setTimer_21(){
+        console.log("Timer.setTimer_21()");
+        let t = Timer.Timers[21];
+        if (t.handl != -1) clearTimeout(t.handl);
+        t.handl = setTimeout(Timer.timeout_21, Consts.TIMER_21_TIME);
+    }
+
+    static clearTimer_21(){
+        console.log("Timer.clearTimer_21()");
+        clearTimeout(Timer.Timers[21].handl);
+    }
+
+    static timeout_21(){
+        console.log("Timer.timeout_21()");
+        if (SST.checkErr() || !SST.checkWaitingResponse(121)) return;
+        let t = Timer.Timers[21];
+        t.count = t.count + 1;
+        if (t.count > Consts.MAX_TIMER_21_COUNT){
+            UC.err_timer_21();
+            return;
+        }
+        UC.goToDialog(SST.getCurrentDialog());
+    }
+
     static setTimer_30(){
         console.log("Timer.setTimer_30()");
         let t = Timer.Timers[30];

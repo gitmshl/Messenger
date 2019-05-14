@@ -18,8 +18,12 @@ class UC{
 
     static goToDialog(dialog_id){
         console.log("UC.goToDialog");
+        if (!SST.handshake) return;
         Painter.FromDialogListToDialog(dialog_id);
-        /* PASS еще много нужно написать ! */
+        SST.setCurrentDialog(dialog_id);
+        Sender.send_21(dialog_id);
+        SST.fixSendingRequest(21);
+        Timer.setTimer_21();
     }
 
     static err_150(){
@@ -32,6 +36,10 @@ class UC{
 
     static err_timer_20(){
         console.log("err_timer_20");
+    }
+
+    static err_timer_21(){
+        console.log("err_timer_21");
     }
 
     static err_timer_30(){
