@@ -88,6 +88,7 @@ class SST{
      * @param flag - на него и устаналивается handshake
      */
     static setHandshake(flag = true){
+        console.log("SST.setHandshake");
         this.handshake = flag;
     }
 

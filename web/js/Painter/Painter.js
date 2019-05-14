@@ -21,9 +21,6 @@ class Painter{
      */
     static setCorrectClassOnUnreadMessages(dialog_id, from_user_id, last_msg_time, last_read_time, my_last_reading_time){
         let my_id = SST.getId();
-        last_msg_time = new Date(last_msg_time);
-        last_read_time = new Date(last_read_time);
-        my_last_reading_time = new Date(my_last_reading_time);
         var dialog_block = document.getElementById(dialog_id);
         if (my_id == from_user_id) {
             if (last_msg_time < last_read_time) return;
@@ -35,8 +32,24 @@ class Painter{
         dialog_block.classList.add("unread");
     }
 
-    static getRightDateTime(){
-        return "0:18";
+    static getRightDateTime(last_msg_time){
+        let now = new Date();
+        if (now.getFullYear() > last_msg_time.getFullYear())
+            return last_msg_time.getDay() + " " + Painter.monthNames[last_msg_time.getMonth()] + " " + last_msg_time.getFullYear();
+        if (now.getMonth() == last_msg_time.getMonth())
+        {
+            if (now.getDay() - last_msg_time.getDay() == 1)
+                return "Yesterday";
+            if (now.getDay() == last_msg_time.getDay())
+            {
+                let hours = last_msg_time.getHours();
+                let minutes = last_msg_time.getMinutes();
+                if (hours < 10) hours = "0" + hours;
+                if (minutes < 10) minutes = "0" + minutes;
+                return hours + ":" + minutes;
+            }
+        }
+        return last_msg_time.getDay() + " " + Painter.monthNames[last_msg_time.getMonth()]
     }
 
     /**
@@ -57,6 +70,10 @@ class Painter{
         let last_msg_time = dialogInf["last_msg_time"];
         let last_read_time = dialogInf["last_read_time"];
         let my_last_reading_time = dialogInf["my_last_reading_time"];
+        /// Переводим строки Timestamp в объект Date
+        last_msg_time = new Date(last_msg_time);
+        last_read_time = new Date(last_read_time);
+        my_last_reading_time = new Date(my_last_reading_time);
 
         let div = document.createElement("div");
         div.className = "dialog_block";
@@ -64,7 +81,7 @@ class Painter{
         let avatar_block = "<div class=\"avatar_block\"><img src=\"img/user_"+ SST.getId() +"/"+ dialog_img +"\"></div>"; /// описание блока avatar_block
         let sub1 = "<div class=\"sub1\">" + dialog_name + "</div>"; /// Имя
         let sub2 = "<div class=\"sub2\" style=\"display: block;\">"+last_msg+"</div>"; /// последнее сообщение
-        let date = "<div class=\"date\">"+Painter.getRightDateTime()+"</div>"; /// дата (время) последнего сообщения
+        let date = "<div class=\"date\">"+Painter.getRightDateTime(last_msg_time)+"</div>"; /// дата (время) последнего сообщения
         let function_onclick = "alert("+ dialog_id +");"
         div.innerHTML = avatar_block +
             "<a href=\"google.com\" class=\"profile_name_link\" onclick=\"" + function_onclick +" return false;\">" +
@@ -126,4 +143,8 @@ class Painter{
             maindiv: null
         }
     }
+
+    static monthNames = ["January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    ];
 }

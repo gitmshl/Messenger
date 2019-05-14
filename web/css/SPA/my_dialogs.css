@@ -276,7 +276,7 @@ a#plus {
 
 .profile_name{
     position: absolute;
-    width: 100%;
+    width: 110%;
     height: 100%;
     padding-left: 2%;
 }
@@ -309,13 +309,6 @@ a#plus {
 
 .profile_name .date{
 	position: absolute;
-	right: -15%;
-	top: 40%;
-}
-
-/*Если пришло не сегодня. В таком случае, нужно выводить дату, поэтому другое расположение*/
-.profile_name .date1{ 
-	position: absolute;
-	right: -15%;
-	top: 20%;
+	right: -5%;
+	top: 10%;
 }
