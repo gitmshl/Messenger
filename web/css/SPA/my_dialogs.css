@@ -20,14 +20,14 @@ header{
 }
 
 .header{
-	background-image:url(../images/SPA/header_bg.png);
+	background-image:url(../../images/SPA/header_bg.png);
 	background-position:fixed;
 	width:100%;
 	height:52px;
 }
 
 .subheader{
-	background-image:url(../images/SPA/subheader_bg.png);
+	background-image:url(../../images/SPA/subheader_bg.png);
 	background-position:fixed;
 	width:100%;
 	height:52px;
@@ -40,7 +40,7 @@ header{
 	float:left;
 	width:20%;
 	height:52px;
-	background-image:url(../images/SPA/);
+	background-image:url(../../images/SPA/);
 }
 
 .search_block{
@@ -56,7 +56,7 @@ header{
 .search_field{
 	margin-left:0%;
 	padding-top:0px;
-	background-image:url(../images/SPA/search_field.png);
+	background-image:url(../../images/SPA/search_field.png);
 	background-repeat:no-repeat;
 	background-position:0 0px;
 	height:30px;
@@ -215,6 +215,14 @@ a#plus {
 	border-bottom:1px solid #DFE2E8;
 }
 
+.dialog_block:hover{
+	width:100%;
+	height:88px;
+	background-color: #90C7DD;
+	position:relative;
+	border-bottom:1px solid #DFE2E8;
+}
+
 .avatar_block{
 	width:30%;
 	height:100%;
@@ -289,7 +297,13 @@ a#plus {
 .just{
 
 }
-.dread{
+
+/*
+	класс не прочитанных сообщений (причем мною(чужих сообщений) либо другими(моих сообщений)
+	В зависимости от этих вариантов, класс нужно ставить в нужное место, не более того.
+	Само css описание одинаковое
+*/
+.unread{
 	background-color: #d7d7f7;
 }
 

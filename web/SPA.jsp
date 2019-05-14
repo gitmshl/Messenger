@@ -123,27 +123,27 @@
             </form>
 
             <div id="Dialogs">
-                <div class="dialog_block">
-                    <div class="avatar_block">
-                        <img src="img/mfB4lkFrPe0.jpg">
-                    </div>
+                <%--<div class="dialog_block">--%>
+                    <%--<div class="avatar_block">--%>
+                        <%--<img src="img/mfB4lkFrPe0.jpg">--%>
+                    <%--</div>--%>
 
-                    <a href="google.com" class="profile_name_link" onclick="alert('hi'); return false;">
-                        <div class="profile_name">
-                            <div class="sub1">
-                                Musa Halilov
-                            </div>
-                            <div class="sub2 dread">
-                                some textsome textsome
-                            </div>
-                            <div class="sub3" style="display: none;">
-                            </div>
-                            <div class="date">
-                                9:05
-                            </div>
-                        </div>
-                    </a>
-                </div>
+                    <%--<a href="google.com" class="profile_name_link" onclick="alert('hi'); return false;">--%>
+                        <%--<div class="profile_name">--%>
+                            <%--<div class="sub1">--%>
+                                <%--Musa Halilov--%>
+                            <%--</div>--%>
+                            <%--<div class="sub2 dread">--%>
+                                <%--some textsome textsome--%>
+                            <%--</div>--%>
+                            <%--<div class="sub3" style="display: none;">--%>
+                            <%--</div>--%>
+                            <%--<div class="date">--%>
+                                <%--9:05--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                    <%--</a>--%>
+                <%--</div>--%>
             </div>
 
         </div>
