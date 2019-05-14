@@ -9,7 +9,7 @@ class SST{
         this.Come = [false, false]; /// Come[0] - 20 request, Come[1] - 30 request
         this.err_critical = this.err_noncritical = false;
         this.handshake = false;
-        this.current_dialog = -2; /// не загрузился список диалогов
+        this.current_dialog = -1;
     }
 
     /**
