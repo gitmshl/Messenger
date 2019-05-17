@@ -168,6 +168,19 @@ class Painter{
         Painter.unlockSending();
     }
 
+    /**
+     * Функция производит добавление сообщения, которое было отправлено данным пользователем.
+     * Вызывается, когда пользователь нажимает на кнопку отправить сообщение и сервер возвращает ответ 110.
+     * @constructor
+     */
+    static AddMyMessage(){
+        let myMsg = Painter.getMsg();
+        console.log("AddMyMessage: " + myMsg);
+        Painter.unlockSending();
+        Painter.Block.Dialog.input_field.value = "";
+        /* еще нужно прописать код по, непосредственно, отрисовке сообщения */
+    }
+
     static showDialogList(){
         let b = Painter.Block.DialogList;
         b.div.style.display = "block";
@@ -241,6 +254,13 @@ class Painter{
         });
         if (Painter.Buffer.length > Consts.PainterMaxBufferSize)
             Painter.Buffer.shift();
+    }
+
+    /**
+     * Получает сообщение из textarea, которое пользователь ввел
+     */
+    static getMsg(){
+        return Painter.Block.Dialog.input_field.value;
     }
 
     static Block = {

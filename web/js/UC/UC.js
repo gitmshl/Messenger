@@ -8,6 +8,19 @@ class UC{
         Timer.setTimer_30();
     }
 
+    /**
+     * Отправка сообщения (нажатие на кнопку enter в диалоге, в поле отправки сообщения)
+     */
+    static req_10(){
+        console.log("UC.req_10");
+        /// если мы не в диалоге, то ничего не делаем (эта часть, впринципе, не должна сработать)
+        if (SST.getCurrentDialog() < 0) return;
+        Painter.blockSending();
+        Sender.send_10(Painter.getMsg());
+        SST.fixSendingRequest(10);
+        Timer.setTimer_10();
+    }
+
     static req_20(){
         console.log("UC.rec_20()");
         if (!SST.checkCame(30)) return;
@@ -32,6 +45,10 @@ class UC{
 
     static err_161(){
         console.log("UC.err_161()");
+    }
+
+    static err_timer_10(){
+        console.log("err_timer_10");
     }
 
     static err_timer_20(){

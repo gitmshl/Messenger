@@ -1,6 +1,9 @@
 class Consts{
     static DATA_TYPE_TEXT = 0;
 
+    static MAX_TIMER_10_COUNT = 5;
+    static TIMER_10_TIME = 2000;
+
     static MAX_TIMER_30_COUNT = 10;
     static TIMER_30_TIME = 1000;
 

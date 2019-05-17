@@ -4,12 +4,21 @@ class PH {
         var obj = JSON.parse(resp);
         let code = obj.code;
         switch (code) {
+            case 10: console.log(obj.data); break;
+            case 110: this.handl_110(); break;
             case 120: this.handl_120(obj.data); break;
             case 121: this.handl_121(obj.data); break;
             case 130: this.handl_130(); break;
             case 150: this.handl_150(); break;
             case 161: this.handl_161(); break;
         }
+    }
+
+    static handl_110(data){
+        if (SST.checkErr() || !SST.checkWaitingResponse(110)) return;
+        SST.fixReceptionAnswer(110);
+        Timer.clearTimer_10();
+        Painter.AddMyMessage();
     }
 
     static handl_120(data){

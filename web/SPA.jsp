@@ -41,7 +41,15 @@
             ws.onerror = function(){
                 console.log("error of connection");
             }
+
+            /* Вешаем обработчик на нажатие кнопки отправки сообщения в диалоге */
+            document.getElementById("textar").addEventListener("keydown", function(e){
+                if (!e.shiftKey && e.key == "Enter"){
+                    UC.req_10();
+                }
+            });
         }
+
     </script>
 
 </head>

@@ -18,6 +18,30 @@ class Timer{
         /// после создания timers_0 нужно будет и их уничтожить !!!
     }
 
+    static setTimer_10(){
+        console.log("Timer.setTimer_10()");
+        let t = Timer.Timers[10];
+        if (t.handl != -1) clearTimeout(t.handl);
+        t.handl = setTimeout(Timer.timeout_10, Consts.TIMER_10_TIME);
+    }
+
+    static clearTimer_10(){
+        console.log("Timer.clearTimer_10()");
+        clearTimeout(Timer.Timers[10].handl);
+    }
+
+    static timeout_10(){
+        console.log("Timer.timeout_10()");
+        if (SST.checkErr() || !SST.checkWaitingResponse(110)) return;
+        let t = Timer.Timers[10];
+        t.count = t.count + 1;
+        if (t.count > Consts.MAX_TIMER_10_COUNT){
+            UC.err_timer_10();
+            return;
+        }
+        UC.req_10();
+    }
+
     static setTimer_20(){
         console.log("Timer.setTimer_20()");
         let t = Timer.Timers[20];

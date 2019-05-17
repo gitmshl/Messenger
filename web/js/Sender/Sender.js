@@ -13,6 +13,13 @@ class Sender{
         Sender.send_dt_TEXT(1, user_id, dialog_id, "");
     }
 
+    static send_10(msg){
+        console.log("Sender.send_21(" + msg + ")");
+        let user_id = SST.getId();
+        let dialog_id = SST.getCurrentDialog();
+        Sender.send_dt_TEXT(10, user_id, dialog_id, msg);
+    }
+
     static send_20(){
         console.log("Sender.send_20()");
         let user_id = SST.getId();
