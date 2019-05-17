@@ -110,22 +110,32 @@ class SST{
         return this.current_dialog;
     }
 
-    static setUser(id, name="", login="", email=""){
+    static setUser(id, name="", login="", email="", avatar="standart.jpg"){
         this.User.id = id;
         this.User.name = name;
         this.User.login = login;
         this.User.email = email;
+        this.User.avatar = avatar;
     }
 
     static getId(){
         return this.User.id;
     }
 
+    static getName(){
+        return this.User.name;
+    }
+
+    static getAvatar(){
+        return this.User.avatar;
+    }
+
     static User = {
         id: -1,
         name: "",
         email: "",
-        login: ""
+        login: "",
+        avatar: ""
     }
 
     static DialogInformation = {

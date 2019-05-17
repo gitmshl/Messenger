@@ -179,6 +179,15 @@ class Painter{
         Painter.unlockSending();
         Painter.Block.Dialog.input_field.value = "";
         /* еще нужно прописать код по, непосредственно, отрисовке сообщения */
+        let msg_id = Painter.Block.Dialog.maindiv.getElementsByClassName("dialog_history_current_dialog").length;
+        let message = {
+            from_user_id: SST.getId(),
+            from_user_name: SST.getName(),
+            from_user_avatar: SST.getAvatar(),
+            msg: myMsg,
+            time: new Date()
+        }
+        Painter.InsertInDOMMessageWhenLastMsgNotFromMe(message, msg_id, "unread");
     }
 
     static showDialogList(){

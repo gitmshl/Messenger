@@ -14,7 +14,7 @@ class Sender{
     }
 
     static send_10(msg){
-        console.log("Sender.send_21(" + msg + ")");
+        console.log("Sender.send_10(" + msg + ")");
         let user_id = SST.getId();
         let dialog_id = SST.getCurrentDialog();
         Sender.send_dt_TEXT(10, user_id, dialog_id, msg);

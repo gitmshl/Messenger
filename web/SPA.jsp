@@ -21,7 +21,13 @@
     <script type="text/javascript">
 
         window.onload = function(){
-            SST.setUser(8, "Musa", "halilovmusa", "halilovmusa@gmail.com");
+            let id = 8;
+            if (id == 8)
+                SST.setUser(8, "Musa", "halilovmusa", "halilovmusa@gmail.com", "standart.jpg");
+            else if (id == 9)
+                SST.setUser(9, "Murad", "magomedovmurad", "magomedovmurad@gmail.com", "standart.jpg");
+            else if (id == 7)
+                SST.setUser(7, "s", "a", "d", "standart.jpg");
             var ws = new WebSocket("ws://localhost:8080/Messenger_war_exploded/tph");
 
             Sender.setWs(ws);
@@ -151,17 +157,17 @@
             </div>
 
             <div id="Messages">
-                <div class="dialog_history_current_dialog" id="message_id_1">
-                    <div class="message_current_dialog">
-                        <div id="photo_space">
-                            <img src="img/mfB4lkFrPe0.jpg" alt="" id="avat">
-                            <div class="hiddenUserName_current_dialog" style="display: none;">User Name</div>
-                            <div class="hiddenUserId_current_dialog" style="display: none;">User Id</div>
-                        </div>
-                        <p class="date_current_dialog">04:06</p>
-                        <p class="message_text_current_dialog">dfgdfgdfgdfgdfg</p>
-                    </div>
-                </div>
+                <%--<div class="dialog_history_current_dialog" id="message_id_1">--%>
+                    <%--<div class="message_current_dialog">--%>
+                        <%--<div id="photo_space">--%>
+                            <%--<img src="img/mfB4lkFrPe0.jpg" alt="" id="avat">--%>
+                            <%--<div class="hiddenUserName_current_dialog" style="display: none;">User Name</div>--%>
+                            <%--<div class="hiddenUserId_current_dialog" style="display: none;">User Id</div>--%>
+                        <%--</div>--%>
+                        <%--<p class="date_current_dialog">04:06</p>--%>
+                        <%--<p class="message_text_current_dialog">dfgdfgdfgdfgdfg</p>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
             </div>
             <div class="typing_block_current_dialog">
                 <textarea name="msg" id="textar" disabled="disabled"></textarea>
