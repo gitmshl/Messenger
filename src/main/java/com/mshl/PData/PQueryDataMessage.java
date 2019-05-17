@@ -3,11 +3,16 @@ package com.mshl.PData;
 public class PQueryDataMessage
 {
 
-    public PQueryDataMessage(String name, String avatar, String msg)
+    public PQueryDataMessage(int id, String name, String avatar, String msg)
     {
+        this.id = id;
         this.name = name;
         this.avatar = avatar;
         this.msg = msg;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setName(String name) {
@@ -22,6 +27,10 @@ public class PQueryDataMessage
         this.msg = msg;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public String getName() {
         return name;
     }
@@ -34,6 +43,7 @@ public class PQueryDataMessage
         return msg;
     }
 
+    private int id;
     private String name;
     private String avatar;
     private String msg;
