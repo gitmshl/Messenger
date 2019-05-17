@@ -15,11 +15,11 @@
         if (ws != null)
         {
           var pQuery = {
-              code: 20,
+              code: 10,
               from: user_id,
-              dialog_id: 0,
+              dialog_id: 6,
               data_type: 0,
-              data: ""
+              data: "Тестовый запрос"
           };
           ws.send(JSON.stringify(pQuery));
           console.log(pQuery);
@@ -36,11 +36,7 @@
 
         ws.onmessage = function(data){
           var d = JSON.parse(data.data);
-          console.log("code: " + d["code"])
-          var arr = (JSON.parse(d["data"]))["dialogInfList"];
-          arr.forEach(function(item){
-              console.log("dialog name: " + item["dialog_name"]);
-          });
+          console.log(d);
         }
 
         ws.onclose = function() {

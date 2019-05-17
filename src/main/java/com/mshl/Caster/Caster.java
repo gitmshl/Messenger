@@ -27,7 +27,7 @@ public class Caster
      */
     public PQuery getPQueryFromPQDMesage(PQuery pQuery, FromObject fromObject)
     {
-        PQueryDataMessage pQueryDataMessage = new PQueryDataMessage(
+        PQueryDataMessage pQueryDataMessage = new PQueryDataMessage(pQuery.getFrom(),
                 fromObject.getName(), fromObject.getAvatar(),
                 pQuery.getData()
         );
