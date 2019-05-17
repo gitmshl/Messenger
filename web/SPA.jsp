@@ -148,7 +148,7 @@
         <div class="middle_content_current_dialog">
 
             <div class="profile_block_current_dialog">
-                <img src="img/mfB4lkFrPe0.jpg"  class="profile_photo_current_dialog" alt="">
+                <img src="img/user_8/mfB4lkFrPe0.jpg" class="profile_photo_current_dialog" alt="">
                 <div class="profile_name_current_dialog">
                     <div class="sub1_current_dialog">
                         <a href="#" class="profile_name_link_current_dialog">MUSA</a>
