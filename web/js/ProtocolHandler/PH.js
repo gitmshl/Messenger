@@ -22,6 +22,10 @@ class PH {
     static handl_1(pquery){
         console.log("handl_1");
         console.log(pquery);
+        let fromMe = SST.getId() == pquery.from;
+        Painter.ChangeToReadClassInDialogList(pquery.dialog_id, fromMe);
+        if (pquery.dialog_id != SST.getCurrentDialog()) return;
+        Painter.ChangeToReadClassInDialog();
     }
 
     /**
@@ -43,6 +47,8 @@ class PH {
             case 10: PH.h10_1(from_user_id, from_dialog_id, from_user_name, from_user_avatar, msg); break;
             case 21: PH.h10_2(from_user_id, from_dialog_id, from_user_name, from_user_avatar, msg); break;
         }
+        console.log("scrolling");
+        Painter.scrollDown();
     }
 
     static handl_110(data){
@@ -74,9 +80,10 @@ class PH {
         if (my_id != from_user_id){
             let last_msg_time = new Date(data.lastMsgInf.last_msg_time);
             let my_last_reading_time = new Date(data.lastMsgInf.my_last_reading_time);
-            if (last_msg_time > my_last_reading_time)
+            if (last_msg_time >= my_last_reading_time)
                 Sender.send_1();
         }
+
     }
 
     static handl_130(){
@@ -106,7 +113,7 @@ class PH {
         let current_dialog_id = SST.getCurrentDialog();
         let fromMe = from_user_id == SST.getId();
         Painter.AddMessageInDialogList(from_user_id, from_dialog_id, from_user_name, from_user_avatar, msg, fromMe);
-        if (current_dialog_id != SST.getCurrentDialog()) return;
+        if (current_dialog_id != from_dialog_id) return;
         if (fromMe) {
             Painter.AddMyMessage(msg);
             return;

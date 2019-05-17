@@ -32,11 +32,20 @@ class UC{
     static goToDialog(dialog_id){
         console.log("UC.goToDialog");
         if (!SST.handshake) return;
+        Painter.clearDialog();
         Painter.FromDialogListToDialog(dialog_id);
         SST.setCurrentDialog(dialog_id);
         Sender.send_21(dialog_id);
         SST.fixSendingRequest(21);
         Timer.setTimer_21();
+    }
+
+    static goToDialogList(){
+        console.log("goToDialogList");
+        Painter.saveToBuffer(SST.getCurrentDialog(), Painter.getMsg());
+        Painter.hideDialog();
+        SST.setCurrentDialog(-1);
+        Painter.showDialogList();
     }
 
     static err_150(){

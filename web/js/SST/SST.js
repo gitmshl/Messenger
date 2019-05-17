@@ -99,6 +99,7 @@ class SST{
 
     static setCurrentDialog(dialog_id){
         SST.current_dialog = dialog_id;
+        if (dialog_id == -1) return;
         let dialog_block = document.getElementById(dialog_id);
         let dialog_name = dialog_block.getElementsByClassName("sub1")[0].textContent;
         let dialog_img = dialog_block.getElementsByClassName("avatar_block")[0].getElementsByTagName("img")[0].src

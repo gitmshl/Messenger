@@ -12,6 +12,41 @@ class Painter{
     }
 
 
+
+
+    /**
+     * Изменяет в DL класс диалога dialog_id на "прочитанный другими"
+     * @param dialog_id
+     * @constructor
+     */
+    static ChangeToReadClassInDialogList(dialog_id, fromMe){
+        console.log("ChangeToReadClassInDialogList " + dialog_id);
+        if (!fromMe){
+            let sub2 = document.getElementById(dialog_id).getElementsByClassName("sub2")[0];
+            sub2.classList.remove("unread");
+            return;
+        }
+        let dialog_block = document.getElementById(dialog_id);
+        dialog_block.classList.remove("unread");
+    }
+
+    /**
+     * Изменяет класс последних сообщений (отправленных каким-то пользователем) на "прочатанны другими"
+     * @constructor
+     */
+    static ChangeToReadClassInDialog(){
+        console.log("ChangeToReadClassInDialog");
+        let maindiv = Painter.Block.Dialog.maindiv;
+        let lastmsg = maindiv.lastChild;
+        let lastid = lastmsg.getElementsByClassName("hiddenUserId_current_dialog")[0].textContent;
+        if (SST.getId() != lastid) return;
+        if (!lastmsg.firstChild.classList.contains("unread")) return;
+        let childs = maindiv.getElementsByClassName("message_current_dialog");
+        let length = childs.length;
+        for (let i = 0; i < length; i++)
+            childs[i].classList.remove("unread");
+    }
+
     /**
      * Эта функция производит установку необходимых классов в необходимых элементах DOM, которые
      * отвечают за сообщение. Суть в том, что производится определение того, является ли сообщение
@@ -113,16 +148,22 @@ class Painter{
      * @constructor
      */
     static AddMessageInDialogList(from_user_id, from_dialog_id, from_user_name, from_user_avatar, msg, fromMe){
-        console.log("AddMessageInDialogList");
+        console.log("AddMessageInDialogList" + " " + from_dialog_id);
         let dialog = document.getElementById(from_dialog_id);
         let sub2 = dialog.getElementsByClassName("sub2")[0];
-        let dialog_block = Painter.Block.DialogList.maindiv.getElementsByClassName("dialog_block")[0];
+        let date = dialog.getElementsByClassName("date")[0];
+        //let dialog_block = Painter.Block.DialogList.maindiv.getElementsByClassName("dialog_block")[0];
+        let dialog_block = dialog;
         sub2.textContent = msg;
+        date.textContent = Painter.getRightDateTime(new Date());
         console.log(sub2.textContent + " msg: " + msg);
-        sub2.class = "sub2";
-        dialog_block.class = "dialog_block";
+        sub2.classList.remove("unread");
+        dialog_block.classList.remove("unread");
         if (fromMe) sub2.classList.add("unread");
         else dialog_block.classList.add("unread");
+
+        Painter.Block.DialogList.maindiv.insertBefore(dialog, Painter.Block.DialogList.maindiv.firstChild);
+
     }
 
     static AddInDialogList(dialogInfList){
@@ -232,6 +273,7 @@ class Painter{
             time: new Date()
         }
         Painter.InsertInDOMMessageWhenLastMsgNotFromMe(message, msg_id, "unread");
+        Painter.scrollDown();
     }
 
     /**
@@ -243,7 +285,9 @@ class Painter{
     }
 
     static showDialogList(){
+        console.log("showDialogList");
         let b = Painter.Block.DialogList;
+        console.log(b);
         b.div.style.display = "block";
         b.display = true;
     }
@@ -266,6 +310,7 @@ class Painter{
      */
     static unlockSending(){
         Painter.Block.Dialog.input_field.disabled = "";
+        Painter.scrollDown();
     }
 
     /**
@@ -280,6 +325,10 @@ class Painter{
         Painter.Block.Dialog.input_field.value = Painter.findInBuffer(dialog_id);
         Painter.blockSending();
         Painter.showDialog();
+    }
+
+    static clearDialog(){
+        document.getElementById("Messages").innerHTML = "";
     }
 
     static showDialog(){
@@ -301,10 +350,14 @@ class Painter{
      *          есть диалог dialog_id. В противном случае, возвращается пустая строка.
      */
     static findInBuffer(dialog_id){
+        let res = "";
         Painter.Buffer.forEach(function(item){
-            if (item.dialog_id == dialog_id) return item.text;
+            if (item.dialog_id == dialog_id){
+                res = item.text;
+                return;
+            }
         });
-        return "";
+        return res;
     }
 
     static saveToBuffer(dialog_id, text){
@@ -315,6 +368,12 @@ class Painter{
         });
         if (Painter.Buffer.length > Consts.PainterMaxBufferSize)
             Painter.Buffer.shift();
+    }
+
+    static scrollDown(){
+        console.log("scroll");
+        window.scroll(0, 9999);
+        Painter.Block.Dialog.input_field.focus();
     }
 
     /**

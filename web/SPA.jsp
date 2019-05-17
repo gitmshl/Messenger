@@ -18,10 +18,15 @@
     <script type="text/javascript" src="js/ProtocolHandler/PH.js"></script>
     <script type="text/javascript" src="js/Painter/Painter.js"></script>
 
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/autoResize.js"></script>
 
     <script type="text/javascript">
 
         window.onload = function(){
+
+            $("#textar").autoResize();
+
             let id = <%= PH_Test.id %>;
             if (id == 8)
                 SST.setUser(8, "Musa", "halilovmusa", "halilovmusa@gmail.com", "standart.jpg");
@@ -97,8 +102,8 @@
     <div class="leftSidebar">
         <ul class="left_sidebar_ul">
             <li>
-                <div class="my_page">
-                    <a href="">
+                <div class="my_page" onclick="UC.goToDialogList();">
+                    <a href="" onclick="return false;">
                         My page
                     </a>
                 </div>

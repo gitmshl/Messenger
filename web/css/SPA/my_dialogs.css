@@ -305,6 +305,12 @@ a#plus {
 	font-size:16px;
 }
 
+.dialog_block .sub2{
+	white-space: nowrap; /* Запрещаем перенос строк */
+	overflow: hidden; /* Обрезаем все, что не помещается в область */
+	text-overflow: ellipsis;
+}
+
 /* Подсказка о том, что кто-то набирает сообщение */
 .sub3{
 
@@ -394,6 +400,7 @@ a#plus {
 	min-height: 70px;
 	background-color:white;
 	border:1px solid #DFE2E8;
+	border-radius: 10px;
 }
 
 .message_current_dialog:hover{
@@ -436,12 +443,13 @@ a#plus {
 }
 
 #textar {
+	outline: none;
 	width: 90%;
 	/*   height: 50px; */
 	padding: 0;
 	resize: none;
 	overflow: auto;
-
+	border-radius: 10px;
 
 	min-height: 40px;
 	font-size: 13px;
@@ -460,4 +468,5 @@ a#plus {
 	bottom: 5px;
 	background-color:#CFE1E1;
 	border:1px solid black;
+	border-radius: 10px;
 }
