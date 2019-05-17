@@ -102,6 +102,29 @@ class Painter{
 
     }
 
+    /**
+     * Добавляет сообщение в список диалогов как последнее пришедшее сообщение
+     * @param from_user_id
+     * @param from_dialog_id
+     * @param from_user_name
+     * @param from_user_avatar
+     * @param msg
+     * @param classdop
+     * @constructor
+     */
+    static AddMessageInDialogList(from_user_id, from_dialog_id, from_user_name, from_user_avatar, msg, fromMe){
+        console.log("AddMessageInDialogList");
+        let dialog = document.getElementById(from_dialog_id);
+        let sub2 = dialog.getElementsByClassName("sub2")[0];
+        let dialog_block = Painter.Block.DialogList.maindiv.getElementsByClassName("dialog_block")[0];
+        sub2.textContent = msg;
+        console.log(sub2.textContent + " msg: " + msg);
+        sub2.class = "sub2";
+        dialog_block.class = "dialog_block";
+        if (fromMe) sub2.classList.add("unread");
+        else dialog_block.classList.add("unread");
+    }
+
     static AddInDialogList(dialogInfList){
         console.log("AddInDialogList1");
         let dialogs = dialogInfList["dialogInfList"];
@@ -169,12 +192,33 @@ class Painter{
     }
 
     /**
-     * Функция производит добавление сообщения, которое было отправлено данным пользователем.
-     * Вызывается, когда пользователь нажимает на кнопку отправить сообщение и сервер возвращает ответ 110.
+     * Добавляет сообщение в диалог, при этом, класс сообщения простой (т.е. без подсветок)
+     * @param dialog_id
+     * @param from_user_id
+     * @param from_user_name
+     * @param from_user_avatar
+     * @param msg
      * @constructor
      */
-    static AddMyMessage(){
-        let myMsg = Painter.getMsg();
+    static AddMessageInDialog(dialog_id, from_user_id, from_user_name, from_user_avatar, msg){
+        let msg_id = Painter.Block.Dialog.maindiv.getElementsByClassName("dialog_history_current_dialog").length;
+        let message = {
+            from_user_id: from_user_id,
+            from_user_name: from_user_name,
+            from_user_avatar: from_user_avatar,
+            msg: msg,
+            time: new Date()
+        }
+        Painter.InsertInDOMMessageWhenLastMsgNotFromMe(message, msg_id, "");
+    }
+
+    /**
+     * Функция производит добавление сообщения, которое было отправлено данным пользователем.
+     * Вызывается, когда пользователь нажимает на кнопку отправить сообщение и сервер возвращает ответ 110.
+     * @param myMsg - сообщение, которое отправил пользователь
+     * @constructor
+     */
+    static AddMyMessage(myMsg){
         console.log("AddMyMessage: " + myMsg);
         Painter.unlockSending();
         Painter.Block.Dialog.input_field.value = "";
@@ -188,6 +232,14 @@ class Painter{
             time: new Date()
         }
         Painter.InsertInDOMMessageWhenLastMsgNotFromMe(message, msg_id, "unread");
+    }
+
+    /**
+     * Вставляет сообщение, которое пришло от сервера, в диалог
+     * @constructor
+     */
+    static AddMessageFromServer(){
+
     }
 
     static showDialogList(){

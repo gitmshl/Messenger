@@ -70,6 +70,7 @@ public class Protocol_Handler
     private void handl_1(PQuery pQuery) throws SQLException
     {
         db_broker.markReadMessage(pQuery);
+        sender.sendToDialog(pQuery.getDialog_id(), pQuery);
     }
 
     private void handl_10(Session session, PQuery pQuery) throws SQLException, ProtocolException

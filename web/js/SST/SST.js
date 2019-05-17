@@ -130,6 +130,16 @@ class SST{
         return this.User.avatar;
     }
 
+    /**
+     * Возвращает код запроса ( < 100), который ожидается. Если ничего не ожидается, возвращается -1
+     */
+    static getWaitingResponse(){
+        SST.Flags.forEach(function(flag, id){
+            if (flag) return id;
+        });
+        return -1;
+    }
+
     static User = {
         id: -1,
         name: "",

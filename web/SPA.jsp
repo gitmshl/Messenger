@@ -1,3 +1,4 @@
+<%@ page import="com.mshl.Protocol_Handler.PH_Test" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!doctype html>
 <html lang="ru-RU">
@@ -21,7 +22,7 @@
     <script type="text/javascript">
 
         window.onload = function(){
-            let id = 8;
+            let id = <%= PH_Test.id %>;
             if (id == 8)
                 SST.setUser(8, "Musa", "halilovmusa", "halilovmusa@gmail.com", "standart.jpg");
             else if (id == 9)
