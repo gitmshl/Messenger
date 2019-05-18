@@ -1,5 +1,6 @@
 <%@ page import="com.mshl.Protocol_Handler.PH_Test" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page session="false" %>
 <!doctype html>
 <html lang="ru-RU">
 <head>
