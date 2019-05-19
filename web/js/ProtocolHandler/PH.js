@@ -11,6 +11,7 @@ class PH {
             case 120: this.handl_120(obj.data); break;
             case 121: this.handl_121(obj.data); break;
             case 130: this.handl_130(); break;
+            case 140: this.handl_140(obj); break;
             case 150: this.handl_150(); break;
             case 161: this.handl_161(); break;
         }
@@ -65,8 +66,8 @@ class PH {
         SST.fixReceptionAnswer(111);
         Timer.clearTimer_11();
         data = JSON.parse(data.data);
-        SST.setUser(data.user_id, data.name, data.login, data.email,
-            data.avatar);
+            SST.setUser(data.user_id, data.name, data.login, data.email,
+            data.avatar, data.uid);
         UC.req_20();
     }
 
@@ -106,6 +107,14 @@ class PH {
             UC.req_11();
             return;
         }
+    }
+
+    static handl_140(data){
+        console.log("handl_140");
+        let uid = data.data;
+        console.log("uid: " + uid);
+        if (uid == SST.getUID())
+            UC.closeConnection();
     }
 
     static handl_161(){

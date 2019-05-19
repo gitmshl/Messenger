@@ -86,6 +86,7 @@ public class Consts
         Protocol_Codes.add(20);
         Protocol_Codes.add(21);
         Protocol_Codes.add(30);
+        Protocol_Codes.add(40);
     }
 
     public static boolean existCode(int code)

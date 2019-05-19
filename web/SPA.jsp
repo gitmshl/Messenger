@@ -6,19 +6,20 @@
     Cookie[] cookies = request.getCookies();
     int id = -1;
     String uid = request.getSession().getId();
-    for (Cookie cookie: cookies)
-        if (cookie.getName().equals("ID"))
-        {
-            try
+    if (cookies != null)
+        for (Cookie cookie: cookies)
+            if (cookie.getName().equals("ID"))
             {
-                id = Integer.parseInt(cookie.getValue());
+                try
+                {
+                    id = Integer.parseInt(cookie.getValue());
+                }
+                catch (NumberFormatException e)
+                {
+                    id = -1;
+                    break;
+                }
             }
-            catch (NumberFormatException e)
-            {
-                id = -1;
-                break;
-            }
-        }
     if (id == -1 || !HST.exist(uid, id))
     {
 %>
@@ -109,8 +110,8 @@
             <div class="right_column">
                 <div class="signOut_block">
                     <form action="">
-                        <div class="signOut_a">
-                            <a class="right_top" href="">Sign out</a>
+                        <div class="signOut_a" onclick="UC.logout()">
+                            <a class="right_top" href="" onclick="return false;">Sign out</a>
                         </div>
                     </form>
                 </div>

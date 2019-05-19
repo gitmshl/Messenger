@@ -42,7 +42,7 @@ public class Server
             System.out.println("user_id = " + user_id + " uid = " + uid);
 
             gson = new Gson();
-            protocol_handler = new Protocol_Handler(user_id);
+            protocol_handler = new Protocol_Handler(uid, user_id);
             SC = new SessionsContainer();
             if (SC.Add(session, user_id))
                 System.out.println("Id: " + user_id + ". Открыто соединение");

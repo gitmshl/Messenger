@@ -20,6 +20,19 @@ public class Group_Handler
         cache = new LinkedList<>();
     }
 
+    /**
+     * Возвращает список всех сессий, которые открыты у данного пользователя.
+     * @param user_id
+     * @return
+     */
+    public List<Session> getSeansSessionsByUserId(int user_id)
+    {
+        List<Integer> ids = new LinkedList<>();
+        ids.add(user_id);
+        List<Session> list = SC.getSessionsByIds(ids);
+        return list;
+    }
+
     public List<Session> getSessionsByDialogId(int dialog_id)
     {
         try

@@ -111,12 +111,13 @@ class SST{
         return this.current_dialog;
     }
 
-    static setUser(id, name="", login="", email="", avatar="standart.jpg"){
+    static setUser(id, name="", login="", email="", avatar="standart.jpg", uid=""){
         this.User.id = id;
         this.User.name = name;
         this.User.login = login;
         this.User.email = email;
         this.User.avatar = avatar;
+        this.User.uid = uid;
     }
 
     static getId(){
@@ -131,6 +132,10 @@ class SST{
         return this.User.avatar;
     }
 
+    static getUID(){
+        return this.User.uid;
+    }
+
     /**
      * Возвращает код запроса ( < 100), который ожидается. Если ничего не ожидается, возвращается -1
      */
@@ -143,6 +148,7 @@ class SST{
 
     static User = {
         id: -1,
+        uid: "",
         name: "",
         email: "",
         login: "",

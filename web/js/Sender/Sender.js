@@ -45,6 +45,12 @@ class Sender{
         this.send_dt_TEXT(30, user_id, -1, "");
     }
 
+    static send_40(){
+        console.log("Sender.send_40()");
+        let user_id = SST.getId();
+        this.send_dt_TEXT(40, user_id, -1, "");
+    }
+
     static send_dt_TEXT(code, from, dialog_id, data){
         if (this.ws) {
             let msg = {

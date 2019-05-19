@@ -59,6 +59,17 @@ class UC{
         Painter.showDialogList();
     }
 
+    static closeConnection(){
+        Sender.ws.close();
+        document.cookie = "ID=; expires = " + new Date().toUTCString() + ";";
+        location.href = "/Messenger_war_exploded/login";
+    }
+
+    static logout(){
+        console.log("logout");
+        Sender.send_40();
+    }
+
     static err_150(){
         console.log("UC.err_150()");
     }

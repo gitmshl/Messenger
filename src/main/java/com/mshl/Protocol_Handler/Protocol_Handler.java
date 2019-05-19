@@ -3,6 +3,7 @@ package com.mshl.Protocol_Handler;
 import com.mshl.CONSTS.Consts;
 import com.mshl.Caster.Caster;
 import com.mshl.DB_Broker.DB_Broker;
+import com.mshl.HASH_STORE.HST;
 import com.mshl.PData.FromObject;
 import com.mshl.PData.PQuery;
 import com.mshl.ProtocolExceptions.ProtocolException;
@@ -15,9 +16,10 @@ import java.sql.SQLException;
 public class Protocol_Handler
 {
 
-    public Protocol_Handler(int user_id)
+    public Protocol_Handler(String uid, int user_id)
     {
         this.user_id = user_id;
+        this.uid = uid;
         sender = new Sender();
         db_broker = new DB_Broker();
         SC = new SessionsContainer();
@@ -50,6 +52,7 @@ public class Protocol_Handler
             case 20: handl_20(session, pQuery); break;
             case 21: handl_21(session, pQuery); break;
             case 30: handl_30(session, pQuery); break;
+            case 40: handl_40(session, pQuery); break;
         }
     }
 
@@ -87,7 +90,7 @@ public class Protocol_Handler
     private void handl_11(Session session, PQuery pQuery)
     {
         System.out.println("11 запрос");
-        db_broker.sendToUserUserInformation(session, pQuery);
+        db_broker.sendToUserUserInformation(session, pQuery, uid);
     }
 
     private void handl_20(Session session, PQuery pQuery) throws SQLException
@@ -113,6 +116,12 @@ public class Protocol_Handler
         }
     }
 
+    private void handl_40(Session session, PQuery pQuery)
+    {
+        HST.destroy(uid, pQuery.getFrom());
+        sender.send_140(uid, pQuery.getFrom());
+    }
+
     /*
         Пока что не делаем проверок, требующих идти в БД. Это слишком долго ;(
      */
@@ -127,6 +136,7 @@ public class Protocol_Handler
 
     private int user_id; /// создается в момент аутентификации (создание класса) и
                             ///не меняется до разрыва соединения
+    private String uid;
     private Sender sender;
     private DB_Broker db_broker;
     private SessionsContainer SC;

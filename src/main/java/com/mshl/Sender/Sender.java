@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.mshl.CONSTS.Consts;
 import com.mshl.Group_Handler.Group_Handler;
 import com.mshl.PData.FromObject;
+import com.mshl.PData.FromObjectWithUID;
 import com.mshl.PData.PQuery;
 
 import javax.websocket.Session;
@@ -16,6 +17,34 @@ public class Sender
     {
         gson = new Gson();
         group_handler = new Group_Handler();
+    }
+
+    /**
+     * Отправляет запрос 140 о закрытии соединения. Вызывается, когда
+     * пользователь выходит из мессенджера, нажимая на кнопку logout.
+     * При этом, он посылает запрос 140 на сервер, и сервер должен закрыть
+     * все сеансы данного пользователя. Данный метод, как раз таки, это и делает.
+     * @param user_id
+     * @param uid - это очень важный параметр, ибо, когда сообщение придет ко
+     *            всем сеансам данного пользователя, эти сеансы должны сверить
+     *            свой uid с данным, и, если они совпадают, то закрыть соединение.
+     *            В противном случае, оставить открытым.
+     */
+    public void send_140(String uid, int user_id)
+    {
+        List<Session> sessionList = group_handler.getSeansSessionsByUserId(user_id);
+        PQuery pQuery;
+        for (Session session : sessionList)
+        {
+            pQuery = new PQuery(140, Consts.SERVER_ID, -1,
+                    Consts.DATA_TYPE_TEXT, uid);
+            String message = gson.toJson(pQuery);
+            try
+            {
+                session.getBasicRemote().sendText(message);
+            }
+            catch (IOException e){}
+        }
     }
 
     public void sendMessagesListToUser(Session session, PQuery pQuery, String data)
@@ -94,11 +123,12 @@ public class Sender
         ));
     }
 
-    public void sendUserInformation(Session session, FromObject fromObject)
+    public void sendUserInformation(Session session, FromObject fromObject, String uid)
     {
         System.out.println("send 111");
+        FromObjectWithUID fromObjectWithUID = new FromObjectWithUID(fromObject, uid);
         PQuery pQuery = new PQuery(111 , Consts.SERVER_ID, -1,
-                Consts.DATA_TYPE_USER_INFORMATION, gson.toJson(fromObject));
+                Consts.DATA_TYPE_USER_INFORMATION, gson.toJson(fromObjectWithUID));
         send(session, pQuery);
     }
 

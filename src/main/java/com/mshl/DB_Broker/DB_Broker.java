@@ -21,13 +21,13 @@ public class DB_Broker
         gson = new Gson();
     }
 
-    public void sendToUserUserInformation(Session session, PQuery pQuery)
+    public void sendToUserUserInformation(Session session, PQuery pQuery, String uid)
     {
         int user_id = pQuery.getFrom();
         try
         {
             FromObject fromObject = db_handler.getUserInformationById(user_id);
-            sender.sendUserInformation(session, fromObject);
+            sender.sendUserInformation(session, fromObject, uid);
         }
         catch (SQLException | ProtocolException e){}
 
