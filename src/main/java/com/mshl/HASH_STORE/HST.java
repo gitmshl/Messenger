@@ -1,5 +1,9 @@
 package com.mshl.HASH_STORE;
 
+import com.mshl.CONSTS.Consts;
+
+import java.sql.Timestamp;
+import java.util.Map;
 import java.util.TreeMap;
 
 public class HST
@@ -41,6 +45,7 @@ public class HST
         IDINF idinf = map.get(uid);
         if (idinf == null) return;
         idinf.decCount();
+        GarbageCollect();
     }
 
 
@@ -54,6 +59,23 @@ public class HST
         if (exist(uid, id))
             map.remove(uid);
     }
+
+    private static void GarbageCollect()
+    {
+        System.out.println("GarbageCollect");
+        Timestamp now = new Timestamp(System.currentTimeMillis());
+        if (now.getTime() - lastCleaningTime.getTime() < Consts.MinTimeBetweenCleaning) return;
+        for(Map.Entry<String, IDINF> entry : map.entrySet())
+            if (entry.getValue().getCount() == 0 &&
+                    (now.getTime() - entry.getValue().getTime().getTime()) > Consts.MinTimeBetweenCleaning)
+            {
+                System.out.println("Entry: " + (entry.getValue().getTime().getTime() - now.getTime()));
+                map.remove(entry.getKey());
+            }
+
+    }
+
+    private static Timestamp lastCleaningTime = new Timestamp(System.currentTimeMillis());
 
 }
 

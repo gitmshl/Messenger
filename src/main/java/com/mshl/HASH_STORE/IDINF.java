@@ -35,6 +35,7 @@ class IDINF
 
     public void decCount()
     {
+        System.out.println("decCount: " + (count - 1));
         count--;
         if (count == 0)
             time = new Timestamp(System.currentTimeMillis());

@@ -5,6 +5,8 @@ import java.util.List;
 
 public class Consts
 {
+    public static final int MinTimeBetweenCleaning = 10 * 60 * 1000; /// 10 минут
+
     public static final int SERVER_ID = -1;
     public static final int DATA_TYPE_TEXT = 0; /// data = just string
     /*

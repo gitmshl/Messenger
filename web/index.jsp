@@ -1,4 +1,36 @@
+<%@ page import="com.mshl.HASH_STORE.HST" %>
 <%@ page contentType="text/html;charset=UTF8" language="java" %>
+
+<%
+  Cookie[] cookies = request.getCookies();
+  int id = -1;
+  String uid = request.getSession().getId();
+  if (cookies != null)
+    for (Cookie cookie: cookies)
+      if (cookie.getName().equals("ID"))
+      {
+        try
+        {
+          id = Integer.parseInt(cookie.getValue());
+        }
+        catch (NumberFormatException e)
+        {
+          id = -1;
+          break;
+        }
+      }
+    if (id != -1 && HST.exist(uid, id))
+    {
+%>
+  <script type="text/javascript">
+    location.href = "/Messenger_war_exploded/messenger";
+  </script>
+<%
+    }
+    else
+    {
+%>
+
 <!doctype html>
 
 <html lang="ru-RU">
@@ -38,4 +70,7 @@
 </body>
 </html>
 
+<%
+  }
+%>
 <!-- #57273d - крутой цвет для посдветки ошибок -->
