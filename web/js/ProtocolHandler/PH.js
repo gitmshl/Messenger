@@ -7,6 +7,7 @@ class PH {
             case 1: this.handl_1(obj); break;
             case 10: this.handl_10(obj); break;
             case 110: this.handl_110(); break;
+            case 111: this.handl_111(obj); break;
             case 120: this.handl_120(obj.data); break;
             case 121: this.handl_121(obj.data); break;
             case 130: this.handl_130(); break;
@@ -47,7 +48,6 @@ class PH {
             case 10: PH.h10_1(from_user_id, from_dialog_id, from_user_name, from_user_avatar, msg); break;
             case 21: PH.h10_2(from_user_id, from_dialog_id, from_user_name, from_user_avatar, msg); break;
         }
-        console.log("scrolling");
         Painter.scrollDown();
     }
 
@@ -56,6 +56,18 @@ class PH {
         SST.fixReceptionAnswer(110);
         Timer.clearTimer_10();
         ///Painter.AddMyMessage();
+    }
+
+    static handl_111(data)
+    {
+        console.log("handl_111");
+        if (SST.checkErr() || !SST.checkWaitingResponse(111)) return;
+        SST.fixReceptionAnswer(111);
+        Timer.clearTimer_11();
+        data = JSON.parse(data.data);
+        SST.setUser(data.user_id, data.name, data.login, data.email,
+            data.avatar);
+        UC.req_20();
     }
 
     static handl_120(data){
@@ -90,7 +102,8 @@ class PH {
         if (SST.checkErr() || SST.checkWaitingResponse(130)){
             SST.fixReceptionAnswer(130);
             Timer.clearTimer_30();
-            UC.req_20();
+            ///UC.req_20();
+            UC.req_11();
             return;
         }
     }

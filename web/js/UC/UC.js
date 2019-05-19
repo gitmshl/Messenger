@@ -2,7 +2,10 @@ class UC{
     static start(withoutTimerFinit = false){
         console.log("UC.start()");
         SST.init();
-        if (!withoutTimerFinit) Timer.init();
+        if (!withoutTimerFinit)
+        {
+            Timer.init();
+        }
         Sender.send_30();
         SST.fixSendingRequest(30);
         Timer.setTimer_30();
@@ -19,6 +22,14 @@ class UC{
         Sender.send_10(Painter.getMsg());
         SST.fixSendingRequest(10);
         Timer.setTimer_10();
+    }
+
+    static req_11(){
+        console.log("UC.req_11");
+        if (!SST.checkCame(30)) return;
+        Sender.send_11();
+        SST.fixSendingRequest(11);
+
     }
 
     static req_20(){
@@ -58,6 +69,10 @@ class UC{
 
     static err_timer_10(){
         console.log("err_timer_10");
+    }
+
+    static err_timer_11(){
+        console.log("err_timer_11");
     }
 
     static err_timer_20(){

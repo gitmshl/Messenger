@@ -4,6 +4,7 @@ class Timer{
         console.log("Timer.init()");
         this.Timers[0] = {handl: -1, code: 0, count: 0};
         this.Timers[10] = {handl: -1, code: 10, count: 0};
+        this.Timers[11] = {handl: -1, code: 11, count: 0};
         this.Timers[20] = {handl: -1, code: 20, count: 0};
         this.Timers[21] = {handl: -1, code: 21, count: 0};
         this.Timers[30] = {handl: -1, code: 30, count: 0};
@@ -40,6 +41,30 @@ class Timer{
             return;
         }
         UC.req_10();
+    }
+
+    static setTimer_11(){
+        console.log("Timer.setTimer_11()");
+        let t = Timer.Timers[11];
+        if (t.handl != -1) clearTimeout(t.handl);
+        t.handl = setTimeout(Timer.timeout_11, Consts.TIMER_11_TIME);
+    }
+
+    static clearTimer_11(){
+        console.log("Timer.clearTimer_11()");
+        clearTimeout(Timer.Timers[11].handl);
+    }
+
+    static timeout_10(){
+        console.log("Timer.timeout_11()");
+        if (SST.checkErr() || !SST.checkWaitingResponse(111)) return;
+        let t = Timer.Timers[11];
+        t.count = t.count + 1;
+        if (t.count > Consts.MAX_TIMER_11_COUNT){
+            UC.err_timer_11();
+            return;
+        }
+        UC.req_11();
     }
 
     static setTimer_20(){

@@ -21,6 +21,18 @@ public class DB_Broker
         gson = new Gson();
     }
 
+    public void sendToUserUserInformation(Session session, PQuery pQuery)
+    {
+        int user_id = pQuery.getFrom();
+        try
+        {
+            FromObject fromObject = db_handler.getUserInformationById(user_id);
+            sender.sendUserInformation(session, fromObject);
+        }
+        catch (SQLException | ProtocolException e){}
+
+    }
+
     public void sendToUserMessagesList(Session session, PQuery pQuery) throws SQLException
     {
         PQueryMessagesList pQueryMessagesList = new PQueryMessagesList();

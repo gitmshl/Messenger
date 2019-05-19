@@ -1,55 +1,41 @@
-<%@ page import="com.mshl.Protocol_Handler.Protocol_Handler" %>
-<%@ page import="com.mshl.DB_Broker.DB_Broker_Test" %>
-<%@ page import="com.mshl.Protocol_Handler.PH_Test" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-  <head>
-    <title>TestConnector</title>
+<%@ page contentType="text/html;charset=UTF8" language="java" %>
+<!doctype html>
 
-      <script type="text/javascript" src="js/Sender/Sender.js"></script>
-        <script type="text/javascript" src="js/SST/SST.js"></script>
-      <script type="text/javascript" src="js/Consts/Consts.js"></script>
-      <script type="text/javascript" src="js/UC/UC.js"></script>
-      <script type="text/javascript" src="js/Timer/Timer.js"></script>
-      <script type="text/javascript" src="js/ProtocolHandler/PH.js"></script>
+<html lang="ru-RU">
+<head>
+  <meta charset="UTF-8">
+  <title>Вход</title>
+  <link rel="stylesheet" href="css/LogIn/check_in_style.css">
+  <link rel="stylesheet" href="fonts/LogIn/fonts.css">
+  <script type="text/javascript" src="js/Consts/Consts.js"></script>
+  <script type="text/javascript" src="js/jquery.js"></script>
+  <script type="text/javascript" src="js/LogIn.js"></script>
 
-    <script type="text/javascript">
-
-        var ws = null;
-
-        SST.setUser(8, "Musa", "halilovmusa", "halilovmusa@gmail.com");
-
-      function connect(){
-        if (ws != null) return;
-
-        ws = new WebSocket("ws://localhost:8080/Messenger_war_exploded/tph");
-
-        Sender.setWs(ws);
-
-        ws.onopen = function (){
-          UC.start();
-        }
-
-        ws.onmessage = function(data){
-            PH.handl(data.data);
-        }
-
-        ws.onclose = function() {
-          console.log("closed");
-        }
-
-        ws.onerror = function(){
-           console.log("error of connection");
-        }
-      }
-
-    </script>
-
-  </head>
-  <body>
-      <button onclick="connect()">connect</button>
-  </body>
-
-
-
+</head>
+<body id="log_in_body">
+<header>
+  <div class="header">
+    <form action="">
+      <input  type="image" id="log_in" name="check-in" src="images/LogIn/Check_in_small.png" alt="Зарегистрироваться"></input>
+    </form>
+  </div>
+</header>
+<div class="wrapper_big">
+  <div class="wrapper_log_in">
+    <div class="box_bkg_log_in">
+      <div class="log_in_icon"></div>
+      <div class="log_in_text"></div>
+      <div class="field" id="first_field">
+        <span class="username_set_icon"><input type="text" id="login" name="LogIn"  class="color-text" placeholder="Login" maxlength="18"></span>
+      </div>
+      <div class="field" >
+        <span class="password_set_icon"><input type="password" id="password" name="Password" class="color-text" class="password_set_icon_try" placeholder="Password" maxlength="30"></span>
+      </div>
+      <input  type="image" id="submit" name="Log-in_button" src="images/LogIn/log_in_large.png" value = "Войти"></input>
+    </div>
+  </div>
+</div>
+</body>
 </html>
+
+<!-- #57273d - крутой цвет для посдветки ошибок -->

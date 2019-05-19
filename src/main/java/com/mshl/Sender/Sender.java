@@ -3,6 +3,7 @@ package com.mshl.Sender;
 import com.google.gson.Gson;
 import com.mshl.CONSTS.Consts;
 import com.mshl.Group_Handler.Group_Handler;
+import com.mshl.PData.FromObject;
 import com.mshl.PData.PQuery;
 
 import javax.websocket.Session;
@@ -91,6 +92,14 @@ public class Sender
                 Consts.DATA_TYPE_TEXT,
                 ""
         ));
+    }
+
+    public void sendUserInformation(Session session, FromObject fromObject)
+    {
+        System.out.println("send 111");
+        PQuery pQuery = new PQuery(111 , Consts.SERVER_ID, -1,
+                Consts.DATA_TYPE_USER_INFORMATION, gson.toJson(fromObject));
+        send(session, pQuery);
     }
 
     private void send(Session session, PQuery pQuery)

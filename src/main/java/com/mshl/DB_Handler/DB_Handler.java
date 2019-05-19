@@ -273,6 +273,45 @@ public class DB_Handler
         }
     }
 
+    /**
+     * Не тестировался!
+     * Возвращает объект FromObject(т.е. информацию о пользователе) по его логину и паролю
+     * @param login
+     * @param password
+     * @return
+     * @throws SQLException
+     * @throws ProtocolException
+     */
+    public FromObject getUserInformationByLoginAndPassword(String login, String password) throws SQLException, ProtocolException
+    {
+        Connection connection = GetConnection();
+        if (connection == null) throw new SQLException();
+        try (PreparedStatement preparedStatement =
+                     connection.prepareStatement(
+                             "select * from \"UsersInformation\" where login=? and password=?;"))
+        {
+            preparedStatement.setString(1, login);
+            preparedStatement.setString(2, password);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet == null) throw new ProtocolException("user doen't exist");
+            while (resultSet.next())
+            {
+                int user_id = resultSet.getInt("user_id");
+                String name = resultSet.getString("name");
+                String email = resultSet.getString("email");
+                String avatar = resultSet.getString("avatar");
+                Timestamp last_visit_time = resultSet.getTimestamp("last_visit_time");
+                boolean online = resultSet.getBoolean("online");
+                return new FromObject(user_id, name, login, email, avatar, last_visit_time, online);
+            }
+            throw new ProtocolException("User doesn't exist");
+        }
+        finally
+        {
+            connector.closeConnection(connection);
+        }
+    }
+
     /* Тестирование: 28.04.19 23:40 */
     public boolean Update_DialogsLastSessionsChanges(int id)
     {

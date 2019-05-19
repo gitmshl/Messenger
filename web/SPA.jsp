@@ -1,6 +1,38 @@
 <%@ page import="com.mshl.Protocol_Handler.PH_Test" %>
+<%@ page import="com.mshl.HASH_STORE.HST" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page session="false" %>
+
+<%
+    Cookie[] cookies = request.getCookies();
+    int id = -1;
+    String uid = request.getSession().getId();
+    for (Cookie cookie: cookies)
+        if (cookie.getName().equals("ID"))
+        {
+            try
+            {
+                id = Integer.parseInt(cookie.getValue());
+            }
+            catch (NumberFormatException e)
+            {
+                id = -1;
+                break;
+            }
+        }
+    if (id == -1 || !HST.exist(uid, id))
+    {
+%>
+    <script>
+        location.href = "/Messenger_war_exploded/login";
+    </script>
+<%
+    }
+    else
+    {
+
+%>
+
+
 <!doctype html>
 <html lang="ru-RU">
 <head>
@@ -28,14 +60,9 @@
 
             $("#textar").autoResize();
 
-            let id = <%= PH_Test.id %>;
-            if (id == 8)
-                SST.setUser(8, "Musa", "halilovmusa", "halilovmusa@gmail.com", "standart.jpg");
-            else if (id == 9)
-                SST.setUser(9, "Murad", "magomedovmurad", "magomedovmurad@gmail.com", "standart.jpg");
-            else if (id == 7)
-                SST.setUser(7, "s", "a", "d", "standart.jpg");
-            var ws = new WebSocket("ws://localhost:8080/Messenger_war_exploded/tph");
+            SST.setUser(<%=id%>);
+
+            var ws = new WebSocket("ws://localhost:8080/Messenger_war_exploded/tmessenger?UID=<%=uid%>&id=<%=id%>");
 
             Sender.setWs(ws);
 
@@ -186,3 +213,7 @@
 </div>
 </body>
 </html>
+
+<%
+    }
+%>

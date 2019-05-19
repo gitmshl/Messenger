@@ -4,7 +4,7 @@ body{
 	min-height: 510px;
     min-width: 1024px;
 	font-family:blogger, Arial, serif;
-	background: url(../images/bg.jpg) no-repeat center center fixed;
+	background: url(../../images/LogIn/bg.jpg) no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -12,7 +12,7 @@ body{
 }
 
 #log_in_body{
-	background: url(../images/log_in_bg.png) no-repeat center center fixed;
+	background: url(../../images/LogIn/log_in_bg.png) no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -25,7 +25,7 @@ header{
 }
 
 .header{
-	background-image:url(../images/header_bg.png);
+	background-image:url(../../images/LogIn/header_bg.png);
 	background-position:fixed;
 	width:100%;
 	height:52px;
@@ -39,7 +39,7 @@ header{
 
 .wrapper_big{
 	clear:both;
-	margin-top:50px;
+	margin-top:100px;
 	width: 100%;
     height: 100%;
     position: relative;
@@ -62,18 +62,14 @@ header{
 	/*margin:auto auto;*/
 	width:341px;
 	height:300;	
-	position: fixed;
-	top: 50%;
-	left: 50%;
-	margin-top: -150px;
-	margin-left: -170.5px;
+	margin:auto;
 }
 
 .box_bkg{
 	margin:auto auto;
 	width:341px;
 	height:502px;
-	background-image:url(../images/box_bkg.png);
+	background-image:url(../../images/LogIn/box_bkg.png);
 }
 
 .box_bkg_log_in{
@@ -81,14 +77,14 @@ header{
 	padding-top:2px;
 	width:341px;
 	height:300px;
-	background-image:url(../images/box_bkg_log_in.png);
+	background-image:url(../../images/LogIn/box_bkg_log_in.png);
 	background-repeat:no-repeat;
 }
 
 .icon{
 	height:46px;
 	width:46px;
-	background-image:url(../images/icon.png);
+	background-image:url(../../images/LogIn/icon.png);
 	margin-top:20px;
 	margin-left:36px;
 	float:left;
@@ -97,7 +93,7 @@ header{
 .register_now{
 	height:100px;
 	width:200px;
-	background-image:url(../images/Register_Now.png);
+	background-image:url(../../images/LogIn/Register_Now.png);
 	margin-top:10px;
 	margin-left:100px;
 	background-position-y:20px;
@@ -107,7 +103,7 @@ header{
 .log_in_icon{
 	height:46px;
 	width:46px;
-	background-image:url(../images/log_in_icon.png);
+	background-image:url(../../images/LogIn/log_in_icon.png);
 	background-repeat:no-repeat;
 	margin-top:32px;
 	margin-left:38px;
@@ -117,7 +113,7 @@ header{
 .log_in_text{
 	height:90px;
 	width:200px;
-	background-image:url(../images/Log_in_text.png);
+	background-image:url(../../images/LogIn/Log_in_text.png);
 	margin-top:10px;
 	margin-left:100px;
 	background-position-y:20px;
@@ -130,7 +126,7 @@ header{
 
 .field{
 	margin:20px auto 10px;
-	background:url(../images/field.png) no-repeat 50% 50%;
+	background:url(../../images/LogIn/field.png) no-repeat 50% 50%;
 	width:275px;
 	height:46px;
 }
@@ -138,7 +134,7 @@ header{
 .username_set_icon{
 	font-size:28px;
 	height:46px;
-	background-image:url(../images/user_icon.png);
+	background-image:url(../../images/LogIn/user_icon.png);
 	background-repeat:no-repeat;
 	/*background-position-x:15px;
 	background-position-y:5px;*/	 
@@ -148,7 +144,7 @@ header{
 .password_set_icon{
 	font-size:28px;
 	height:46px;
-	background-image:url(../images/password_icon.png);
+	background-image:url(../../images/LogIn/password_icon.png);
 	background-repeat:no-repeat;
 	/*background-position-x:15px;
 	background-position-y:5px;*/

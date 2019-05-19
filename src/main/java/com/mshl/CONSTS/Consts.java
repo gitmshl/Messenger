@@ -66,6 +66,15 @@ public class Consts
             ]
         }
      */
+
+    public static final int DATA_TYPE_USER_INFORMATION = 4; ///(FromObject)
+    /*
+           data =
+           {
+
+           }
+     */
+
     public static final List<Integer> Protocol_Codes = new ArrayList<>();
 
     static
@@ -73,6 +82,7 @@ public class Consts
         Protocol_Codes.add(0);
         Protocol_Codes.add(1);
         Protocol_Codes.add(10);
+        Protocol_Codes.add(11);
         Protocol_Codes.add(20);
         Protocol_Codes.add(21);
         Protocol_Codes.add(30);

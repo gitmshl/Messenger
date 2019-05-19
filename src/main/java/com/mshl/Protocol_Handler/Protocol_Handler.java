@@ -46,6 +46,7 @@ public class Protocol_Handler
             case 0: handl_0(pQuery); break;
             case 1: handl_1(pQuery); break;
             case 10: handl_10(session, pQuery); break;
+            case 11: handl_11(session, pQuery); break;
             case 20: handl_20(session, pQuery); break;
             case 21: handl_21(session, pQuery); break;
             case 30: handl_30(session, pQuery); break;
@@ -81,6 +82,12 @@ public class Protocol_Handler
 
         PQuery pQueryForDialog = caster.getPQueryFromPQDMesage(pQuery, fromObject);
         sender.sendToDialog(pQueryForDialog.getDialog_id(), pQueryForDialog);
+    }
+
+    private void handl_11(Session session, PQuery pQuery)
+    {
+        System.out.println("11 запрос");
+        db_broker.sendToUserUserInformation(session, pQuery);
     }
 
     private void handl_20(Session session, PQuery pQuery) throws SQLException
