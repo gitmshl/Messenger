@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <title>TEST</title>
 
+
     <script type="text/javascript">
         var ws = null;
         var user_id = 0;
